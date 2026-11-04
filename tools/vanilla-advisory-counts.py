@@ -18,7 +18,7 @@ vanilla = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(vanilla)
 assert len(sys.argv) > 1 and sys.argv[1] == '1.21.1'
 assert '--auto' not in sys.argv and '--transfer-from' not in sys.argv
-table = (ROOT/'mixins/viafabricplus/tables_121.rs').read_text(encoding='utf-8')
+table = (ROOT/'mixins/viahorizon/tables_121.rs').read_text(encoding='utf-8')
 names = table.split('pub const CLIENTBOUND: &[&str] = &[', 1)[1].split('];', 1)[0]
 CHUNK = re.findall(r'"([A-Z_]+)"', names).index('LEVEL_CHUNK_WITH_LIGHT')
 VALUES = [-1, 4097, 8192, -32768, 32767]

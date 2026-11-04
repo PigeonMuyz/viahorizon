@@ -79,7 +79,7 @@ def release_protocol(release):
         parts = tuple(map(int, value.split('.')))
         return parts + (0,) * (3 - len(parts))
 
-    catalog = (ROOT/'mixins/viafabricplus/core.rs').read_text(encoding='utf-8')
+    catalog = (ROOT/'mixins/viahorizon/core.rs').read_text(encoding='utf-8')
     releases = re.findall(r'first: "([\d.]+)",\s+last: "([\d.]+)",\s+'
                           r'protocol: (\d+),\s+legacy: false,', catalog)
     for first, last, protocol in releases:
@@ -243,7 +243,7 @@ def main():
     server_dir.mkdir(parents=True)
     env=isolated_env(run)
     game=run/'game'
-    data=game/'horizon-mods/.horizon-mod-data/viafabricplus'
+    data=game/'horizon-mods/.horizon-mod-data/viahorizon'
     data.mkdir(parents=True)
     (data/'config.json').write_text(json.dumps({'schema':1,'target':'auto' if args.auto else args.release,
                                                'login_preview':False,'servers':{}}),encoding='utf-8')

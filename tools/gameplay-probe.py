@@ -41,8 +41,8 @@ def main():
     workspace = ROOT/'target'/'gameplay-probe'
     workspace.mkdir(exist_ok=True)
     mods = workspace/('mods-'+uuid.uuid4().hex)
-    bundle = mods/'viafabricplus'
-    shutil.copytree(ROOT/'mixins'/'viafabricplus', bundle)
+    bundle = mods/'viahorizon'
+    shutil.copytree(ROOT/'mixins'/'viahorizon', bundle)
     core = bundle/'core.rs'
     text = core.read_text(encoding='utf-8')
     version = tomllib.loads((bundle/'horizon-mixin.toml').read_text(encoding='utf-8'))['mod']['version']

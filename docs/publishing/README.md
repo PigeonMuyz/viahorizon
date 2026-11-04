@@ -1,6 +1,6 @@
 # Publishing ViaHorizon to Horizon
 
-The public README stays short. This file records the registry-specific workflow
+This file records the registry-specific workflow
 from [Horizon's guide](https://playhorizon.dev/docs/publish-a-mod).
 
 ## Build and prepare
@@ -34,17 +34,17 @@ optional and no registry signing key has been configured.
 
 Generated files are under `dist/`:
 
-- `viahorizon-0.8.4-dev.hnmod` and its `.sha256` file: package and checksum.
+- `viahorizon-0.8.5-dev.hnmod` and its `.sha256` file: package and checksum.
 - `publishing/submission.json`: page and version fields for the submission form.
-- `publishing/viafabricplus.toml`: complete candidate registry entry.
+- `publishing/viahorizon.toml`: complete candidate registry entry.
 - `publishing/package-check.json`, `readiness.json`, and `index-preview.json`:
   checker results and the index preview.
 
 Open [the submission form](https://playhorizon.dev/mods/submit), sign in with
 GitHub and select **Native mod**. Upload the `.hnmod`, and use the values in
 `submission.json`. The display name is **ViaHorizon**; the manifest and registry
-ID is **viafabricplus**, retained so existing settings and server overrides carry
-over. Owner/author: `hhhhsffd`. License: `GPL-3.0-or-later`. Source:
+ID is **viahorizon**. Settings from earlier installations migrate automatically.
+Owner/author: `hhhhsffd`. License: `GPL-3.0-or-later`. Source:
 <https://github.com/hhhhsffd/viahorizon>. No icon or signature is required.
 
 The form submits to `horizon-rust/horizon-mods` for a maintainer to review.

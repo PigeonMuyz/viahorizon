@@ -1,6 +1,6 @@
 [mod]
-id = "viafabricplus"
-version = "0.8.4-dev"
+id = "viahorizon"
+version = "0.8.5-dev"
 priority = 100
 
 [[module]]
@@ -813,7 +813,7 @@ visibility = "pub"
 [[module]]
 id = "runtime"
 file = "crates/horizon-client/src/game.rs"
-name = "viafabricplus"
+name = "viahorizon"
 source = "runtime.rs"
 
 [[injection]]

@@ -9,10 +9,11 @@ use std::{
     time::{Duration, Instant},
 };
 
-// Retain the persisted ID so existing mod settings and server overrides carry over.
-pub const ID: &str = "viafabricplus";
+pub const ID: &str = "viahorizon";
+// Read only when migrating a previous installation.
+pub const LEGACY_ID: &str = "viafabricplus";
 pub const NAME: &str = "ViaHorizon";
-pub const VERSION: &str = "0.8.4-dev";
+pub const VERSION: &str = "0.8.5-dev";
 pub const CLIENT_PROTOCOL: i32 = 777;
 pub const CLIENT_VERSION: &str = "26.3";
 pub const MAX_PACKET: usize = 2_097_152;
@@ -654,6 +655,15 @@ impl Config {
             Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(Self::default()),
             Err(e) => Err(e.to_string()),
         }
+    }
+    /// Preserve a new config, or copy legacy settings once without changing the source.
+    pub fn load_migrating(path: &Path, previous: &Path) -> Result<(Self, bool)> {
+        if path.try_exists().map_err(|e| e.to_string())? {
+            return Self::load(path).map(|config| (config, false));
+        }
+        let config = Self::load(previous)?;
+        config.save(path)?;
+        Ok((config, true))
     }
     pub fn save(&self, path: &Path) -> Result<()> {
         use std::sync::atomic::{AtomicU64, Ordering};

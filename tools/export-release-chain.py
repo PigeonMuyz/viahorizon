@@ -188,7 +188,7 @@ def main():
                                 check=True, capture_output=True, text=True).stdout.strip()
         if actual != revision:
             raise ValueError(f"Expected pinned checkout {revision}, got {actual}")
-    destination = Path(__file__).resolve().parents[1] / "mixins/viafabricplus"
+    destination = Path(__file__).resolve().parents[1] / "mixins/viahorizon"
     module = importlib.util.spec_from_file_location("mapping_export", Path(__file__).with_name("export-mappings.py"))
     nbt = importlib.util.module_from_spec(module)
     module.loader.exec_module(nbt)

@@ -369,3 +369,41 @@ fn tcp_probe_rejects_mismatched_pong() {
     );
     server.join().unwrap();
 }
+
+#[test]
+fn renamed_config_migrates_once_and_keeps_existing_preferences() {
+    let root = std::env::temp_dir().join(format!(
+        "viahorizon-migration-{}-{}",
+        std::process::id(),
+        std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos()
+    ));
+    let previous = root.join("previous/config.json");
+    let current = root.join("viahorizon/config.json");
+    let mut old = Config { target: Selection::parse("auto").unwrap(), ..Config::default() };
+    old.servers.insert("example.org:25565".into(), Selection::parse("1.7.2").unwrap());
+    old.save(&previous).unwrap();
+    let bytes = std::fs::read(&previous).unwrap();
+    let (migrated, first) = Config::load_migrating(&current, &previous).unwrap();
+    assert!(first);
+    assert_eq!(migrated.json(), old.json());
+    assert_eq!(std::fs::read(&previous).unwrap(), bytes);
+    let mut chosen = migrated;
+    chosen.target = Selection::parse("1.19.2").unwrap();
+    chosen.save(&current).unwrap();
+    let (loaded, again) = Config::load_migrating(&current, &previous).unwrap();
+    assert!(!again);
+    assert_eq!(loaded.json(), chosen.json());
+    std::fs::write(&current, "invalid JSON").unwrap();
+    assert!(Config::load_migrating(&current, &previous).is_err());
+    assert_eq!(std::fs::read_to_string(&current).unwrap(), "invalid JSON");
+    std::fs::remove_file(&current).unwrap();
+    std::fs::write(&previous, "invalid legacy JSON").unwrap();
+    assert!(Config::load_migrating(&current, &previous).is_err());
+    assert!(!current.exists());
+    std::fs::remove_file(&previous).unwrap();
+    let (fresh, first) = Config::load_migrating(&current, &previous).unwrap();
+    assert!(first);
+    assert_eq!(fresh.json(), Config::default().json());
+    assert!(current.is_file());
+    std::fs::remove_dir_all(root).unwrap();
+}

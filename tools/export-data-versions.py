@@ -104,7 +104,7 @@ def main():
     lines += ['pub const fn for_protocol(protocol: i32) -> Option<i32> {', 'match protocol {']
     lines += [f"{entry['protocol']} => Some(P{entry['protocol']})," for entry in result]
     lines += ['_ => None,', '}', '}']
-    (ROOT/'mixins/viafabricplus/data_versions.rs').write_text('\n'.join(lines)+'\n', encoding='utf-8')
+    (ROOT/'mixins/viahorizon/data_versions.rs').write_text('\n'.join(lines)+'\n', encoding='utf-8')
 
 
 if __name__ == '__main__':

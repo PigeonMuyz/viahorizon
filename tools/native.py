@@ -87,7 +87,7 @@ def sync_stage(fresh, stage):
 
 def package():
     compat = json.loads((ROOT / "compatibility.json").read_text())
-    bundle = ROOT / "mixins" / "viafabricplus"
+    bundle = ROOT / "mixins" / "viahorizon"
     manifest = tomllib.loads((bundle / "horizon-mixin.toml").read_text())
     assert manifest["compatibility"]["horizon_revision"] == compat["horizon_revision"]
     native = {"schema": 1, "id": manifest["mod"]["id"], "version": manifest["mod"]["version"],
@@ -96,7 +96,7 @@ def package():
     files = {"horizon-native.json": (json.dumps(native, indent=2, sort_keys=True) + "\n").encode()}
     for source in sorted(bundle.iterdir()):
         if source.suffix in (".rs", ".toml"):
-            files[f"mixins/viafabricplus/{source.name}"] = source.read_bytes()
+            files[f"mixins/viahorizon/{source.name}"] = source.read_bytes()
     # Keep readable notices with the source, as Horizon's registry guide requires.
     files[f"mixins/{native['id']}/LICENSE"] = (ROOT / "LICENSE").read_bytes()
     files[f"mixins/{native['id']}/NOTICE.md"] = (ROOT / "THIRD_PARTY_NOTICES.md").read_bytes()

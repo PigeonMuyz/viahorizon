@@ -1,0 +1,34 @@
+{
+  "package": "viahorizon-0.8.5-dev.hnmod",
+  "sha256": "b87fe3bf8ebd71b4c11c555b8e8825e43ebfe9e29eaef9142b704760d401a96c",
+  "size": 877195,
+  "reproducible": true,
+  "package_check": {
+    "api": "native-1/6475f62f3c834b7489e1816bf47f47ea5eb2b879/3f99a5c60dfa311cc365524c44ae2fd799bfa1de",
+    "api_level": null,
+    "capabilities": [],
+    "game": "26.3",
+    "id": "viahorizon",
+    "kind": "native-mod",
+    "requires": [],
+    "sha256": "b87fe3bf8ebd71b4c11c555b8e8825e43ebfe9e29eaef9142b704760d401a96c",
+    "side": null,
+    "signed": false,
+    "size": 877195,
+    "version": "0.8.5-dev"
+  },
+  "native_check": {
+    "kind": "check",
+    "horizon": "6475f62f3c834b7489e1816bf47f47ea5eb2b879",
+    "bundle_sha256": "d4d66bbbb11d06ba19c935f5486e2d9b8ab0c82167feb949b684f26a00ff9275"
+  },
+  "signed": false,
+  "registry_entry_check": "passed",
+  "registry_index_build": "passed",
+  "submission_status": "prepared; not submitted",
+  "version": "0.8.5-dev",
+  "standalone_tests": 47,
+  "clippy": "passed with warnings denied",
+  "in_game_tests": "not run",
+  "migration_test": "copies previous config once, preserves existing configs, rejects invalid data without overwriting"
+}

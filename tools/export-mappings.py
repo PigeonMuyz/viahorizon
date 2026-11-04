@@ -198,7 +198,7 @@ def main():
     }
     for symbol, path in enums.items():
         output.append(f"pub const {symbol}: &[&str] = &[" + ",".join(f'"{name}"' for name in packet_names(base / path)) + "];")
-    destination = Path(__file__).resolve().parents[1] / "mixins/viafabricplus/tables.rs"
+    destination = Path(__file__).resolve().parents[1] / "mixins/viahorizon/tables.rs"
     output.append('pub const BLOCK_ENTITY_IDENTIFIERS: &[&str] = &['+','.join('"'+name+'"' for name in registry_ids('26.2','blockentities'))+'];')
     destination.write_text("\n".join(output) + "\n", encoding="utf-8")
     print(f"Exported {destination}")

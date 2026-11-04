@@ -58,7 +58,7 @@ def main():
         source=args.resources/name;destination=prepared/name
         assert source.is_file(),f'Missing prepared completion file: {name}'
         destination.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source,destination)
-    data=game/'horizon-mods/.horizon-mod-data/viafabricplus';data.mkdir(parents=True)
+    data=game/'horizon-mods/.horizon-mod-data/viahorizon';data.mkdir(parents=True)
     (data/'config.json').write_text(json.dumps({'schema':1,'target':args.release,'login_preview':False,'servers':{}}),encoding='utf-8')
     (game/'options.txt').write_text('renderDistance:2\nsimulationDistance:2\nmaxFps:60\n',encoding='utf-8')
     port=vanilla.free_port()

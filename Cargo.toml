@@ -1,6 +1,6 @@
 [package]
 name = "viahorizon-native"
-version = "0.8.4-dev"
+version = "0.8.5-dev"
 edition = "2024"
 rust-version = "1.95"
 license = "GPL-3.0-or-later"

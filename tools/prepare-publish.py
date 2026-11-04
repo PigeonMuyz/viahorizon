@@ -22,7 +22,7 @@ def main():
     args = parser.parse_args()
     checker = args.checker.resolve()
     compat = json.loads((ROOT / "compatibility.json").read_text(encoding="utf-8"))
-    manifest = tomllib.loads((ROOT / "mixins/viafabricplus/horizon-mixin.toml").read_text(encoding="utf-8"))
+    manifest = tomllib.loads((ROOT / "mixins/viahorizon/horizon-mixin.toml").read_text(encoding="utf-8"))
     page = tomllib.loads((ROOT / "horizon-registry.toml").read_text(encoding="utf-8"))
     package = ROOT / "dist" / f"viahorizon-{manifest['mod']['version']}.hnmod"
     spec = importlib.util.spec_from_file_location("native", ROOT / "tools/native.py")
@@ -58,7 +58,7 @@ def main():
             raise SystemExit(f"Checker {key} mismatch: {check.get(key)!r} != {value!r}")
     entry = {"id": header["id"], "kind": "native-mod", **page, "source": SOURCE,
              "version": header["version"], "game": header["game"],
-             "changelog": "Registry-ready package with license notices and compatibility updates for the current Horizon Nightly."}
+             "changelog": "Use the viahorizon registry ID and migrate existing settings."}
     output = ROOT / "dist" / "publishing"
     output.mkdir(exist_ok=True)
     (output / "submission.json").write_text(json.dumps(entry, indent=2) + "\n", encoding="utf-8")
@@ -74,7 +74,7 @@ def main():
     shutil.copyfile(package, files / sha)
     # Run the same entry/file and index validation as registry CI, using only
     # this submission so unrelated projects need not be downloaded.
-    trial = ROOT / "target" / "publishing" / "entry-check"
+    trial = ROOT / "target" / "publishing" / "entry-check" / header["id"]
     base, head = trial / "base", trial / "head"
     for directory in (base / "mods", head / "mods"):
         directory.mkdir(parents=True, exist_ok=True)

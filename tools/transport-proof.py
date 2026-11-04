@@ -26,5 +26,5 @@ shutil.copyfile(root / "tests" / "horizon_gameplay_chain.rs", destination.with_n
 shutil.copyfile(root / "tests" / "horizon_modern.rs", destination.with_name("vfp_modern.rs"))
 shutil.copyfile(root / "tests" / "horizon_outbox.rs", destination.with_name("vfp_outbox.rs"))
 (destination.parent / "data").mkdir(exist_ok=True)
-shutil.copyfile(root / "mixins" / "viafabricplus" / "capture_session.rs", destination.parent / "data" / "vfp_capture_session.rs")
+shutil.copyfile(root / "mixins" / "viahorizon" / "capture_session.rs", destination.parent / "data" / "vfp_capture_session.rs")
 subprocess.run(["cargo", "test", "--locked", "-p", "horizon-protocol", "--lib", "--test", "vfp_transport", "--test", "vfp_features", "--test", "vfp_predictions", "--test", "vfp_configuration_chain", "--test", "vfp_gameplay_chain", "--test", "vfp_modern", "--test", "vfp_outbox", "--no-fail-fast", "--", "--test-threads=1"], cwd=stage, check=True)
