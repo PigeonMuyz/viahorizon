@@ -34,7 +34,7 @@ optional and no registry signing key has been configured.
 
 Generated files are under `dist/`:
 
-- `viahorizon-0.8.5-dev.hnmod` and its `.sha256` file: package and checksum.
+- `viahorizon-0.8.6-dev.hnmod` and its `.sha256` file: package and checksum.
 - `publishing/submission.json`: page and version fields for the submission form.
 - `publishing/viahorizon.toml`: complete candidate registry entry.
 - `publishing/package-check.json`, `readiness.json`, and `index-preview.json`:

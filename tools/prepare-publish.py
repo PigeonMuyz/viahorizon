@@ -58,7 +58,7 @@ def main():
             raise SystemExit(f"Checker {key} mismatch: {check.get(key)!r} != {value!r}")
     entry = {"id": header["id"], "kind": "native-mod", **page, "source": SOURCE,
              "version": header["version"], "game": header["game"],
-             "changelog": "Use the viahorizon registry ID and migrate existing settings."}
+             "changelog": "Default new configurations to Auto server version detection; preserve saved targets and per-server overrides."}
     output = ROOT / "dist" / "publishing"
     output.mkdir(exist_ok=True)
     (output / "submission.json").write_text(json.dumps(entry, indent=2) + "\n", encoding="utf-8")

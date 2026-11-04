@@ -13,7 +13,7 @@ pub const ID: &str = "viahorizon";
 // Read only when migrating a previous installation.
 pub const LEGACY_ID: &str = "viafabricplus";
 pub const NAME: &str = "ViaHorizon";
-pub const VERSION: &str = "0.8.5-dev";
+pub const VERSION: &str = "0.8.6-dev";
 pub const CLIENT_PROTOCOL: i32 = 777;
 pub const CLIENT_VERSION: &str = "26.3";
 pub const MAX_PACKET: usize = 2_097_152;
@@ -540,8 +540,8 @@ pub fn modern_protocol(protocol: i32) -> Option<&'static Release> {
 
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub enum Selection {
-    #[default]
     Native,
+    #[default]
     Auto,
     Release(String),
 }
@@ -595,7 +595,7 @@ impl Default for Config {
     fn default() -> Self {
         Self {
             enabled: true,
-            target: Selection::Native,
+            target: Selection::default(),
             login_preview: false,
             servers: BTreeMap::new(),
         }

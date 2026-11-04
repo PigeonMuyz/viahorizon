@@ -268,6 +268,54 @@ fn configuration(target: &str, enabled: bool) {
 }
 
 #[test]
+fn default_configuration_detects_172_and_retargets_the_connection() {
+    let _lock = SERIAL.lock().unwrap();
+    vfp::configure(vfp::Config::default());
+    let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+    let address = listener.local_addr().unwrap();
+    let worker = std::thread::spawn(move || {
+        let (mut login, _) = listener.accept().unwrap();
+        login
+            .set_read_timeout(Some(Duration::from_secs(3)))
+            .unwrap();
+        let (mut probe, _) = listener.accept().unwrap();
+        probe
+            .set_read_timeout(Some(Duration::from_secs(3)))
+            .unwrap();
+        let status = vfp::Handshake::parse(&vfp::read_frame(&mut probe).unwrap()).unwrap();
+        assert_eq!(status.protocol, 777);
+        assert_eq!(status.intent, 1);
+        assert_eq!(vfp::read_frame(&mut probe).unwrap(), vec![0]);
+        let mut response = vec![0];
+        vfp::put_string(
+            &mut response,
+            r#"{"version":{"name":"1.7.2","protocol":4}}"#,
+        );
+        vfp::write_frame(&mut probe, &response).unwrap();
+        let translated = vfp::Handshake::parse(&vfp::read_frame(&mut login).unwrap()).unwrap();
+        assert_eq!(translated.protocol, 4);
+        assert_eq!(translated.intent, 2);
+        assert_eq!(translated.host, "127.0.0.1");
+        assert_eq!(translated.port, address.port());
+    });
+    let mut client =
+        Connection::connect("127.0.0.1", address.port(), Duration::from_secs(3)).unwrap();
+    client
+        .send(
+            &vfp::Handshake {
+                protocol: 777,
+                host: "127.0.0.1".into(),
+                port: address.port(),
+                intent: 2,
+            }
+            .body(),
+        )
+        .unwrap();
+    drop(client);
+    worker.join().unwrap();
+}
+
+#[test]
 fn transfer_handshakes_are_adapted_by_the_actual_connection_hook() {
     let _lock = SERIAL.lock().unwrap();
     for version in ["1.19.3", "1.20.4", "1.20.6", "26.2", "26.3"] {
@@ -311,7 +359,10 @@ fn signed_native_connections_announce_the_key_without_retargeting_the_handshake(
     use horizon_protocol::{packets::play, vfp_chat_signing, vfp_tables, vfp_wire};
     use std::sync::Arc;
     let _lock = SERIAL.lock().unwrap();
-    vfp::configure(vfp::Config::default());
+    vfp::configure(vfp::Config {
+        target: vfp::Selection::Native,
+        ..vfp::Config::default()
+    });
     let captured = Arc::new(Mutex::new(Vec::new()));
     let capture = captured.clone();
     vfp_chat_signing::prepare(Some(Arc::new(vfp_chat_signing::Identity {

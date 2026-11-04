@@ -133,8 +133,13 @@ fn settings_round_trip_and_per_server_precedence() {
     assert_eq!(Config::parse(&c.json()).unwrap(), c);
     assert_eq!(c.selection("example.org.", 25565).key(), "1.8");
     assert_eq!(c.selection("example.org", 25566), Selection::Auto);
-    assert_eq!(Config::default().target, Selection::Native);
+    assert_eq!(Selection::default(), Selection::Auto);
+    assert_eq!(Config::default().target, Selection::Auto);
     assert!(!Config::default().login_preview);
+    let native =
+        Config::parse(r#"{"schema":1,"target":"native","login_preview":false}"#).unwrap();
+    assert_eq!(native.target, Selection::Native);
+    assert_eq!(Config::parse(&native.json()).unwrap(), native);
 }
 #[test]
 fn malformed_configs_are_reported_instead_of_partially_applied() {
@@ -157,7 +162,7 @@ fn settings_save_can_atomically_replace_an_existing_file() {
     let path = dir.join("config.json");
     let mut c = Config::default();
     c.save(&path).unwrap();
-    c.target = Selection::Auto;
+    c.target = Selection::Native;
     c.save(&path).unwrap();
     assert_eq!(Config::load(&path).unwrap(), c);
     assert_eq!(std::fs::read_dir(&dir).unwrap().count(), 1);

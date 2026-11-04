@@ -1,0 +1,37 @@
+{
+  "package": "viahorizon-0.8.6-dev.hnmod",
+  "sha256": "8c352b33aa4b55998d56698b08bcc08edd62d6342900a2f324b9f8c490451e2b",
+  "size": 877199,
+  "reproducible": true,
+  "package_check": {
+    "api": "native-1/6475f62f3c834b7489e1816bf47f47ea5eb2b879/3f99a5c60dfa311cc365524c44ae2fd799bfa1de",
+    "api_level": null,
+    "capabilities": [],
+    "game": "26.3",
+    "id": "viahorizon",
+    "kind": "native-mod",
+    "requires": [],
+    "sha256": "8c352b33aa4b55998d56698b08bcc08edd62d6342900a2f324b9f8c490451e2b",
+    "side": null,
+    "signed": false,
+    "size": 877199,
+    "version": "0.8.6-dev"
+  },
+  "native_check": {
+    "kind": "check",
+    "horizon": "6475f62f3c834b7489e1816bf47f47ea5eb2b879",
+    "bundle_sha256": "24d200b4d4053d6f5b1f128f3ee36ebdfe711a9da4e542c8c991f03e47ec75d0"
+  },
+  "signed": false,
+  "registry_entry_check": "passed",
+  "registry_index_build": "passed",
+  "submission_status": "prepared; not submitted",
+  "version": "0.8.6-dev",
+  "standalone_tests": 47,
+  "host_transport_tests": 299,
+  "clippy": "passed with warnings denied",
+  "in_game_tests": "not run",
+  "default_target": "auto",
+  "regression_test": "Default configuration probes a local 1.7.2 status fixture and sends protocol 4 through the injected connection hook.",
+  "saved_settings": "Explicit native targets and per-server overrides remain preserved."
+}
