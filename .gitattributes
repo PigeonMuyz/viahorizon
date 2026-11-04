@@ -1,2 +1,4 @@
 mixins/** -text
 *.hnmod binary
+LICENSE -text
+THIRD_PARTY_NOTICES.md -text

@@ -13,6 +13,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import tomllib
+import urllib.request
 import uuid
 import zipfile
 
@@ -27,6 +28,31 @@ def bundle_digest():
             digest.update(b"\0")
             digest.update(path.read_bytes())
     return digest.hexdigest()
+
+
+def nightly_source(expected):
+    """Resolve the released Nightly, then fetch its exact source commit."""
+    request = urllib.request.Request(
+        "https://api.github.com/repos/horizon-rust/horizon/releases/tags/nightly",
+        headers={"User-Agent": "ViaHorizon-publishing-check"},
+    )
+    with urllib.request.urlopen(request, timeout=30) as response:
+        release = json.load(response)
+    revision = release["target_commitish"]
+    if revision != expected:
+        raise SystemExit(
+            f"Newest Nightly is {revision}, but this internal-hook bundle pins {expected}. "
+            "Audit the hooks and update both compatibility manifests before publishing."
+        )
+    source = ROOT / "target" / "upstream" / "horizon" / revision
+    if not (source / ".git").is_dir():
+        source.mkdir(parents=True, exist_ok=True)
+        subprocess.run(["git", "init", str(source)], check=True, stdout=subprocess.DEVNULL)
+        subprocess.run(["git", "-C", str(source), "remote", "add", "origin",
+                        "https://github.com/horizon-rust/horizon.git"], check=True)
+        subprocess.run(["git", "-C", str(source), "fetch", "--depth", "1", "origin", revision], check=True)
+        subprocess.run(["git", "-C", str(source), "checkout", "--detach", "FETCH_HEAD"], check=True)
+    return source
 
 
 def sync_stage(fresh, stage):
@@ -65,12 +91,15 @@ def package():
     manifest = tomllib.loads((bundle / "horizon-mixin.toml").read_text())
     assert manifest["compatibility"]["horizon_revision"] == compat["horizon_revision"]
     native = {"schema": 1, "id": manifest["mod"]["id"], "version": manifest["mod"]["version"],
-              "game": "26.3", "horizon": compat["horizon_revision"], "mixins": compat["horizon_mixins_revision"]}
+              "game": compat["game"], "horizon": compat["horizon_revision"], "mixins": compat["horizon_mixins_revision"]}
     # No `hooks`: this bundle targets internals and MUST remain pinned.
     files = {"horizon-native.json": (json.dumps(native, indent=2, sort_keys=True) + "\n").encode()}
     for source in sorted(bundle.iterdir()):
         if source.suffix in (".rs", ".toml"):
             files[f"mixins/viafabricplus/{source.name}"] = source.read_bytes()
+    # Keep readable notices with the source, as Horizon's registry guide requires.
+    files[f"mixins/{native['id']}/LICENSE"] = (ROOT / "LICENSE").read_bytes()
+    files[f"mixins/{native['id']}/NOTICE.md"] = (ROOT / "THIRD_PARTY_NOTICES.md").read_bytes()
     out = ROOT / "dist" / f"viahorizon-{native['version']}.hnmod"
     out.parent.mkdir(exist_ok=True)
     with zipfile.ZipFile(out, "w", compression=zipfile.ZIP_DEFLATED) as archive:
@@ -87,7 +116,7 @@ def package():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action", choices=["package", "plan", "check", "build"])
-    parser.add_argument("--horizon", type=Path)
+    parser.add_argument("--horizon", type=Path, help="pristine pinned checkout, or latest for the released Nightly")
     parser.add_argument("--mixins", type=Path)
     args = parser.parse_args()
     if args.action == "package":
@@ -96,6 +125,8 @@ def main():
     if not args.horizon or not args.mixins:
         parser.error("--horizon SOURCE and --mixins EXECUTABLE are required")
     expected = json.loads((ROOT / "compatibility.json").read_text())["horizon_revision"]
+    if str(args.horizon) == "latest":
+        args.horizon = nightly_source(expected)
     actual = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=args.horizon, text=True).strip()
     if actual != expected:
         parser.error(f"Horizon must be pinned to {expected}, found {actual}")
@@ -120,8 +151,14 @@ def main():
     if args.action in ("check", "build"):
         command = ["cargo", args.action, "--locked", "-p", "horizon-client", "--bin", "horizon-client"]
         if args.action == "build":
-            command.extend(["--bin", "horizon-ctl", "--profile", "fast"])
+            command.extend(["-p", "horizon-client-lib", "--bin", "horizon-ctl", "--profile", "fast"])
         subprocess.run(command, cwd=stage, check=True)
+        if bundle_digest() != digest:
+            raise SystemExit("Mod sources changed while compiling; rerun the native check")
+        if args.action == "check":
+            (target / "native-check.json").write_text(json.dumps({
+                "kind": "check", "horizon": expected, "bundle_sha256": digest,
+            }, indent=2) + "\n", encoding="utf-8")
         if args.action == "build":
             if bundle_digest() != digest:
                 raise SystemExit("Mod sources changed while compiling; rebuild before validating")

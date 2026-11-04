@@ -11,17 +11,22 @@ fn copy(r: &mut Reader<'_>, w: &mut Writer, n: usize) -> Result<()> {
     w.bytes(r.bytes(n)?);
     Ok(())
 }
-// The pinned item's Profile reader disagrees with its own metadata reader
-// about skin overrides. Decode the real ResolvableProfile layout here, then
-// produce the profile representation this client can display. The item adapter
-// backs up the complete original value for lossless serverbound restoration.
+// Decode the metadata profile layout and preserve its skin overrides in the
+// item representation. The item adapter retains the complete original value
+// for lossless serverbound restoration.
 pub fn item_profile_262(r: &mut Reader<'_>, w: &mut Writer, forward: bool) -> Result<()> {
-    use crate::item::{Component, Profile, component};
+    use crate::item::{Component, Profile, SkinPatch, component};
     let value = if forward {
         let p = super::read_profile(r)?;
         Component::Profile(Profile {
             name: p.name,
             id: p.uuid,
+            skin: SkinPatch {
+                body: p.body,
+                cape: p.cape,
+                elytra: p.elytra,
+                slim: p.slim,
+            },
             properties: p
                 .properties
                 .into_iter()

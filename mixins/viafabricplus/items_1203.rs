@@ -2015,7 +2015,7 @@ pub fn reverse<M: Maps>(
                 block_field(&mut tag, "Patterns", Tag::List(values))?;
             }
             (75, Component::Int(color)) => block_field(&mut tag, "Base", Tag::Int(color))?,
-            (56, Component::WritableBook(pages)) => {
+            (56, Component::WritableBook { pages, .. }) => {
                 tag.insert(
                     "pages".into(),
                     Tag::List(

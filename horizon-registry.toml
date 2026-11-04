@@ -1,0 +1,24 @@
+name = "ViaHorizon"
+summary = "Choose the Minecraft server version when playing with Horizon 26.3."
+authors = ["hhhhsffd"]
+license = "GPL-3.0-or-later"
+description = """
+ViaHorizon is an unofficial native Rust port of [ViaFabricPlus](https://github.com/ViaVersion/ViaFabricPlus)
+for Horizon 26.3. Select Auto or a server version in Options > Mods > ViaHorizon > Settings.
+Release servers from 1.7.2 through 26.3 are supported; behavior parity and custom server extensions remain incomplete.
+
+This native source mod runs with the game's permissions. It reads and saves its settings and per-server choices,
+probes servers you choose, and translates network packets. Online-mode authentication, encryption and account
+sessions remain handled by Horizon; the mod requests the account's chat certificate through Horizon's normal
+Minecraft services connection. Legacy player skins use Horizon's normal profile resolver.
+No Java runtime, game assets or account credentials are bundled.
+
+Keep Configuration preview OFF to enter a world. The build pins exact Horizon and horizon-mixins revisions because
+it hooks networking internals. Servers older than 1.7.2, snapshots, Bedrock, Beta, Alpha and Classic are unsupported.
+Some advanced item conversions and signed command arguments remain incomplete. See the
+[port ledger](https://github.com/hhhhsffd/viahorizon/blob/main/docs/PORTING.md).
+
+GPL-3.0-or-later. Derived protocol data and upstream authors are credited in
+[third-party notices](https://github.com/hhhhsffd/viahorizon/blob/main/THIRD_PARTY_NOTICES.md).
+This project is not endorsed by ViaVersion, Horizon, Mojang or Microsoft.
+"""

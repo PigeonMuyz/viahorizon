@@ -2,10 +2,12 @@
 fn inject(
     bound: &horizon_protocol::packets::play::ChatTypeBound,
     content: &serde_json::Value,
+    decoration: crate::game::remote::Decoration,
 ) -> ::core::ops::ControlFlow<horizon_client::text::Text> {
     use horizon_client::scoreboard::{comp_text, tag_to_json};
     use horizon_world::nbt::Tag;
-    let Some((sender, decoration)) = horizon_protocol::vfp_chat::direct(bound) else {
+    let narration = matches!(decoration, crate::game::remote::Decoration::Narration);
+    let Some((sender, decoration)) = horizon_protocol::vfp_chat::direct_decoration(bound, narration) else {
         return ::core::ops::ControlFlow::Continue(());
     };
     let key = match decoration.get("translation_key") {

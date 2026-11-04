@@ -12,7 +12,7 @@ use std::{
 // Retain the persisted ID so existing mod settings and server overrides carry over.
 pub const ID: &str = "viafabricplus";
 pub const NAME: &str = "ViaHorizon";
-pub const VERSION: &str = "0.8.3-dev";
+pub const VERSION: &str = "0.8.4-dev";
 pub const CLIENT_PROTOCOL: i32 = 777;
 pub const CLIENT_VERSION: &str = "26.3";
 pub const MAX_PACKET: usize = 2_097_152;

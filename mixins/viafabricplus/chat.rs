@@ -72,9 +72,13 @@ pub fn bound(r: &mut Reader<'_>, w: &mut Writer, protocol: i32) -> Result<()> {
     Ok(())
 }
 pub fn direct(bound: &ChatTypeBound) -> Option<(&Tag, &Tag)> {
+    direct_decoration(bound, false)
+}
+
+pub fn direct_decoration(bound: &ChatTypeBound, narration: bool) -> Option<(&Tag, &Tag)> {
     if bound.chat_type != DIRECT {
         return None;
     }
     let envelope = bound.name.get(ENVELOPE)?;
-    Some((envelope.get("sender")?, envelope.get("type")?.get("chat")?))
+    Some((envelope.get("sender")?, envelope.get("type")?.get(if narration { "narration" } else { "chat" })?))
 }

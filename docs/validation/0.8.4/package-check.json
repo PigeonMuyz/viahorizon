@@ -1,0 +1,14 @@
+{
+  "api": "native-1/6475f62f3c834b7489e1816bf47f47ea5eb2b879/3f99a5c60dfa311cc365524c44ae2fd799bfa1de",
+  "api_level": null,
+  "capabilities": [],
+  "game": "26.3",
+  "id": "viafabricplus",
+  "kind": "native-mod",
+  "requires": [],
+  "sha256": "cd03d8f55e7a43f4e0fde75c50ebeaa8ad83939fcdda86f755a30bae6cd754ad",
+  "side": null,
+  "signed": false,
+  "size": 877707,
+  "version": "0.8.4-dev"
+}

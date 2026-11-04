@@ -672,3 +672,31 @@ fn decorated_pot_special_recipes_consume_their_category_in_both_legacy_formats()
     check::<horizon_protocol::vfp_mapping::V1205>();
     check::<horizon_protocol::vfp_mapping::V121>();
 }
+
+#[test]
+fn inline_chat_holder_selects_chat_and_narration_independently() {
+    use horizon_protocol::{packets::play::ChatTypeBound, vfp_chat};
+    use horizon_world::nbt::Tag;
+    let bound = ChatTypeBound {
+        chat_type: vfp_chat::DIRECT,
+        name: Tag::compound([(
+            vfp_chat::ENVELOPE,
+            Tag::compound([
+                ("sender", Tag::String("Alice".into())),
+                ("type", Tag::compound([
+                    ("chat", Tag::String("visible".into())),
+                    ("narration", Tag::String("spoken".into())),
+                ])),
+            ]),
+        )]),
+        target: None,
+    };
+    let (sender, chat) = vfp_chat::direct(&bound).unwrap();
+    let (narrated_sender, narration) = vfp_chat::direct_decoration(&bound, true).unwrap();
+    assert_eq!(sender, narrated_sender);
+    assert_eq!(chat, &Tag::String("visible".into()));
+    assert_eq!(narration, &Tag::String("spoken".into()));
+    let native = ChatTypeBound { chat_type: 0, ..bound };
+    assert!(vfp_chat::direct_decoration(&native, false).is_none());
+    assert!(vfp_chat::direct_decoration(&native, true).is_none());
+}

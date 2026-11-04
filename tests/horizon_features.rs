@@ -994,6 +994,8 @@ fn profiles_with_skin_overrides_decode_and_restore_the_complete_original_value()
     assert_eq!(p.name.as_deref(), Some("Horizon"));
     assert_eq!(p.id, Some(12));
     assert_eq!(p.properties[0].1, "skin-property");
+    assert_eq!(p.skin.body.as_deref(), Some("minecraft:test_skin"));
+    assert_eq!(p.skin.slim, Some(true));
     assert_eq!(convert_stack(&converted, false), original);
 }
 

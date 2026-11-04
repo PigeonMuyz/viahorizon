@@ -1,6 +1,6 @@
 [mod]
 id = "viafabricplus"
-version = "0.8.3-dev"
+version = "0.8.4-dev"
 priority = 100
 
 [[module]]
@@ -152,7 +152,7 @@ visibility = "pub"
 
 # Internal connection hooks require an exact source pin, not hooks-only mode.
 [compatibility]
-horizon_revision = "d5f484c89f6e88cee27ad104860587a94b379cd5"
+horizon_revision = "6475f62f3c834b7489e1816bf47f47ea5eb2b879"
 
 [[module]]
 id = "chat_signing"
@@ -171,7 +171,7 @@ visibility = "pub"
 [[injection]]
 id = "prepare_chat"
 kind = "HEAD"
-target = "horizon_client::net::run"
+target = "horizon_client_lib::net::run"
 helper = "prepare_chat.rs"
 bindings = [
   { name = "auth", ty = "Option<&crate::auth::AuthSession>", value = "auth" },
@@ -207,7 +207,7 @@ bindings = [
 id = "queued_legacy_send"
 kind = "HEAD"
 cancellable = true
-target = "horizon_client::net::Session::send"
+target = "horizon_client_lib::net::Session::send"
 helper = "queued_send.rs"
 bindings = [
   { name = "session", ty = "&crate::net::Session", value = "self" },
@@ -257,7 +257,7 @@ bindings = [{ name = "game", ty = "&crate::game::Game<'_>", value = "&*self" }]
 id = "legacy_sword_pose"
 kind = "HEAD"
 cancellable = true
-target = "horizon_client::first_person::item_pose"
+target = "horizon_client_lib::first_person::item_pose"
 helper = "legacy_sword_pose.rs"
 bindings = [
   { name = "left", ty = "bool", value = "left" },
@@ -820,11 +820,12 @@ source = "runtime.rs"
 id = "chat_format"
 kind = "HEAD"
 cancellable = true
-target = "horizon_client::game::remote::Game<'_>::format_chat"
+target = "horizon_client::game::remote::Game<'_>::decorate_chat"
 helper = "chat_format.rs"
 bindings = [
   { name = "bound", ty = "&horizon_protocol::packets::play::ChatTypeBound", value = "bound" },
-  { name = "content", ty = "&serde_json::Value", value = "&content" },
+  { name = "content", ty = "&serde_json::Value", value = "content" },
+  { name = "decoration", ty = "crate::game::remote::Decoration", value = "decoration" },
 ]
 
 [[injection]]
