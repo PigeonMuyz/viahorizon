@@ -63,7 +63,7 @@ pub(super) fn sync(game: &mut Game<'_>) {
         if let Some(message) = message {
             ui.probe = None;
             ui.result = message.clone();
-            game.native_chat(&format!("[ViaFabricPlus] {message}"));
+            game.native_chat(&format!("[ViaHorizon] {message}"));
         }
     });
 }
@@ -82,13 +82,11 @@ pub(super) fn settings(game: &mut Game<'_>, buttons: &mut Vec<String>) {
         } else {
             "Check first saved server".into()
         });
-        buttons.push(ui.error.clone().unwrap_or_else(|| {
-            if ui.result.is_empty() {
-                "1.19.3–26.3 gameplay; earlier Releases pending".into()
-            } else {
-                ui.result.clone()
-            }
-        }));
+        if let Some(error) = &ui.error {
+            buttons.push(error.clone());
+        } else if !ui.result.is_empty() {
+            buttons.push(ui.result.clone());
+        }
     });
 }
 pub(super) fn click(game: &mut Game<'_>, button: usize) {
@@ -151,23 +149,23 @@ fn start_probe(ui: &mut Ui, address: String) {
 }
 pub(super) fn command(game: &mut Game<'_>, command: &str) -> bool {
     let mut words = command.split_whitespace();
-    if !matches!(words.next(), Some("vfp" | "viafabricplus")) || !game.native_on(core::ID) {
+    if !matches!(words.next(), Some("vh" | "viahorizon" | "vfp" | "viafabricplus")) || !game.native_on(core::ID) {
         return false;
     }
     sync(game);
     let args: Vec<_> = words.collect();
     let result: core::Result<String> = UI.with(|cell| { let mut ui = cell.borrow_mut();
         match args.as_slice() {
-            [] | ["status"] => Ok(format!("Horizon 26.3 -> {}; 1.19.3–26.3 gameplay; configuration preview {}.",ui.config.target.label(),if ui.config.login_preview { "ON (no world entry)" } else { "OFF" })),
+            [] | ["status"] => Ok(format!("Server target: {}; configuration preview {}.",ui.config.target.label(),if ui.config.login_preview { "ON (no world entry)" } else { "OFF" })),
             ["target",target] => { ui.config.target = core::Selection::parse(target)?; save(game,&mut ui)?; Ok(format!("Next connection: {}",ui.config.target.label())) },
             ["server",address,target] => { let key = core::server_key(address)?; let target = core::Selection::parse(target)?; ui.config.servers.insert(key.clone(),target); save(game,&mut ui)?; Ok(format!("Saved target for {key}")) },
             ["forget",address] => { ui.config.servers.remove(&core::server_key(address)?); save(game,&mut ui)?; Ok("Server override removed".into()) },
-            ["preview",setting] if ["on","off"].contains(setting) => { ui.config.login_preview = *setting == "on"; save(game,&mut ui)?; Ok(if ui.config.login_preview { "Configuration preview enabled; world entry is disabled" } else { "Configuration preview disabled; gameplay is enabled on supported targets" }.into()) },
+            ["preview",setting] if ["on","off"].contains(setting) => { ui.config.login_preview = *setting == "on"; save(game,&mut ui)?; Ok(if ui.config.login_preview { "Configuration preview enabled; world entry is disabled" } else { "Configuration preview disabled" }.into()) },
             ["reload"] => { load(game,&mut ui); apply(game,&mut ui); if let Some(e) = &ui.error { return Err(e.clone()); } Ok("Configuration reloaded".into()) },
             ["probe",address] => { if ui.probe.is_some() { return Err("A probe is already running".into()); } core::address(address)?; start_probe(&mut ui,(*address).into()); Ok("Checking server...".into()) },
-            _ => Ok("/vfp status | target native/auto/VERSION | server ADDRESS TARGET | forget ADDRESS | preview on/off | probe ADDRESS | reload".into()),
+            _ => Ok("/vh status | target native/auto/VERSION | server ADDRESS TARGET | forget ADDRESS | preview on/off | probe ADDRESS | reload".into()),
         }
     });
-    game.native_chat(&format!("[ViaFabricPlus] {}", result.unwrap_or_else(|e| e)));
+    game.native_chat(&format!("[ViaHorizon] {}", result.unwrap_or_else(|e| e)));
     true
 }

@@ -15,7 +15,7 @@ pub fn clientbound_262(id: i32, payload: &[u8]) -> Result<wire::Packet> {
             return Err(Error::new("Trailing finish-configuration data"));
         }
         return Err(Error::new(
-            "ViaFabricPlus Native: 26.2 configuration preview reached the world-entry boundary. Remaining registry schemas and gameplay conversions are not validated; world entry is disabled.",
+            "ViaHorizon: 26.2 configuration preview reached the world-entry boundary. Remaining registry schemas and gameplay conversions are not validated; world entry is disabled.",
         ));
     }
     let mapped = wire::packet_id(t::NEW_CONFIGURATION, name).map_err(Error::new)?;

@@ -1,0 +1,22 @@
+{
+  "name": "ViaHorizon",
+  "version": "0.8.3-dev",
+  "horizon_revision": "d5f484c89f6e88cee27ad104860587a94b379cd5",
+  "bundle_sha256": "ffb470015c62b07b820c4128b8e56d0e0ccd2319a996c7cdf4868847a0bb12b0",
+  "package": {
+    "name": "viahorizon-0.8.3-dev.hnmod",
+    "sha256": "2f52cf4dd3de0a79d8420519df3ee4c2daf37768e2cf24f5a5edf733c4cb0179"
+  },
+  "validation": {
+    "production_build": "passed",
+    "standalone_tests": 46,
+    "host_transport_tests": 209,
+    "clippy": "passed with warnings denied",
+    "launcher_wrapper_help": "passed",
+    "additional_in_game_tests": "not run for this menu/branding change, as requested"
+  },
+  "compatibility": {
+    "persisted_mod_id": "viafabricplus",
+    "old_command_aliases_retained": true
+  }
+}

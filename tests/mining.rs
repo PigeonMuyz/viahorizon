@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-use viafabricplus_native::{vfp_core::put_varint, vfp_mining::Mining};
+use viahorizon_native::{vfp_core::put_varint, vfp_mining::Mining};
 fn action(kind: i32, direction: u8) -> Vec<u8> {
     let mut out = Vec::new();
     put_varint(&mut out, kind);

@@ -1,5 +1,5 @@
 use std::{path::Path, time::Duration};
-use viafabricplus_native::{self as vfp, Config, Selection};
+use viahorizon_native::{self as vfp, Config, Selection};
 
 fn run() -> Result<(), String> {
     let args: Vec<_> = std::env::args().skip(1).collect();
@@ -19,7 +19,7 @@ fn run() -> Result<(), String> {
             if args.len() == 4 { config.servers.insert(vfp::server_key(&args[3])?,selection); } else { config.target = selection; }
             config.save(path)?; print!("{}",config.json());
         }
-        _ => return Err("Usage: vfp-native versions | probe HOST[:PORT] | target CONFIG_PATH native|auto|RELEASE [SERVER]\nThe standalone probe uses A/AAAA records; in-game auto detection also uses SRV.\nGameplay targets: Release 1.19.3 through 26.3.".into()),
+        _ => return Err("Usage: vh-native versions | probe HOST[:PORT] | target CONFIG_PATH native|auto|RELEASE [SERVER]\nThe standalone probe uses A/AAAA records; in-game auto detection also uses SRV.".into()),
     }
     Ok(())
 }

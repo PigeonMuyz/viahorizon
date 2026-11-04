@@ -9,9 +9,10 @@ use std::{
     time::{Duration, Instant},
 };
 
+// Retain the persisted ID so existing mod settings and server overrides carry over.
 pub const ID: &str = "viafabricplus";
-pub const NAME: &str = "ViaFabricPlus Native";
-pub const VERSION: &str = "0.8.2-dev";
+pub const NAME: &str = "ViaHorizon";
+pub const VERSION: &str = "0.8.3-dev";
 pub const CLIENT_PROTOCOL: i32 = 777;
 pub const CLIENT_VERSION: &str = "26.3";
 pub const MAX_PACKET: usize = 2_097_152;
@@ -893,11 +894,11 @@ pub fn choose(
         Stage::Gameplay => Ok(Some(target)),
         Stage::ConfigurationPreview if preview => Ok(Some(target)),
         Stage::ConfigurationPreview => Err(format!(
-            "ViaFabricPlus Native: {} supports configuration preview. Enable Configuration preview to test it; world entry is disabled.",
+            "ViaHorizon: {} supports configuration preview. Enable Configuration preview to test it; world entry is disabled.",
             target.label()
         )),
         Stage::Planned => Err(format!(
-            "ViaFabricPlus Native: Release {} translation is not implemented yet. The client is Horizon 26.3. No incompatible gameplay packets were sent.",
+            "ViaHorizon: Release {} is not implemented.",
             target.label()
         )),
     }
@@ -957,7 +958,7 @@ impl LoginSession {
                 return Err("Login acknowledgement before login success".into());
             }
             return Err(format!(
-                "ViaFabricPlus Native: {} login preview succeeded. This login codec stops here; the native session manages configuration. World entry is disabled.",
+                "ViaHorizon: {} login preview succeeded. This login codec stops here; the native session manages configuration. World entry is disabled.",
                 self.target.label()
             ));
         }

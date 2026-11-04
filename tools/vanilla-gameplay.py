@@ -264,7 +264,7 @@ def main():
                 'level-seed':'1','gamemode':'1' if protocol<393 else 'creative',
                 'max-players':'2','network-compression-threshold':'256',
                 'generate-structures':'false','sync-chunk-writes':'false',
-                'pause-when-empty-seconds':'-1','motd':'Isolated ViaFabricPlus compatibility test'}
+                'pause-when-empty-seconds':'-1','motd':'Isolated ViaHorizon compatibility test'}
     (server_dir/'server.properties').write_text(''.join(f'{k}={v}\n' for k,v in properties.items()),encoding='utf-8')
     (server_dir/'eula.txt').write_text('eula=true\n',encoding='utf-8')
     offline=uuid.UUID(bytes=hashlib.md5(b'OfflinePlayer:VfpSmoke').digest(),version=3)

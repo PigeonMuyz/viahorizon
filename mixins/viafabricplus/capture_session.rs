@@ -127,13 +127,13 @@ impl Outbox {
             .is_err()
         {
             self.failed.store(true, Ordering::Release);
-            eprintln!("ViaFabricPlus Native: outgoing queue exceeded its byte bound");
+            eprintln!("ViaHorizon: outgoing queue exceeded its byte bound");
             return;
         }
         if self.sender.try_send(body).is_err() {
             self.queued_bytes.fetch_sub(size, Ordering::Relaxed);
             self.failed.store(true, Ordering::Release);
-            eprintln!("ViaFabricPlus Native: outgoing queue is full or disconnected");
+            eprintln!("ViaHorizon: outgoing queue is full or disconnected");
         }
     }
 }
@@ -225,7 +225,7 @@ pub fn enqueue_legacy(
             match Outbox::new(&session.writer, &counters, session.configuring.clone()) {
                 Ok(outbox) => *slot = Some(outbox),
                 Err(error) => {
-                    eprintln!("ViaFabricPlus Native: could not start outgoing worker: {error}");
+                    eprintln!("ViaHorizon: could not start outgoing worker: {error}");
                     return false;
                 }
             }

@@ -1,5 +1,5 @@
 use std::{io::Cursor as IoCursor, net::TcpListener, time::Duration};
-use viafabricplus_native::*;
+use viahorizon_native::*;
 
 fn profile(protocol: i32) -> Vec<u8> {
     let mut p = vec![0x12; 16];

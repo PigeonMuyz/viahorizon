@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-use viafabricplus_native::vfp_hash as h;
+use viahorizon_native::vfp_hash as h;
 #[test]
 fn crc32c_matches_the_standard_check_value_and_viaversion_unknown_hash() {
     assert_eq!(h::crc32c(b"123456789") as u32, 0xe3069283);

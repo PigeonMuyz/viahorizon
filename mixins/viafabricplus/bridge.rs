@@ -220,7 +220,7 @@ pub fn send(writer: &mut ConnWriter, body: &[u8]) -> Option<crate::Result<()>> {
                 Ok(v) => Some(v),
                 Err(e) => {
                     return Some(Err(crate::Error::new(format!(
-                        "ViaFabricPlus Native: version detection failed: {e}"
+                        "ViaHorizon: version detection failed: {e}"
                     ))));
                 }
             }

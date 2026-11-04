@@ -2,8 +2,8 @@
 
 **0.8.0-dev** enables Netty Release servers from **1.7.2 through 26.3** on
 Horizon **26.3 / protocol 777**. The existing launcher instance, displayed as
-**ViaFabricPlus 0.8.2**, now runs the verified production binaries from
-`dist/play-0.8.2/`, including the [interaction fixes](INTERACTION_FIXES.md)
+**ViaHorizon 0.8.3**, now runs the verified production binaries from
+`dist/play-0.8.3/`, including the [interaction fixes](INTERACTION_FIXES.md)
 and [chunk-streaming frame-pacing fix](PERFORMANCE.md).
 Its ID remains `viafabricplus-0-7-0`. The 0.8.0 binaries remain under
 `dist/play/`, and 0.7.2-dev is backed up under `dist/play/previous-0.7.2-dev/`.

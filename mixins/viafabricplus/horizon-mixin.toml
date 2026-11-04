@@ -1,6 +1,6 @@
 [mod]
 id = "viafabricplus"
-version = "0.8.2-dev"
+version = "0.8.3-dev"
 priority = 100
 
 [[module]]

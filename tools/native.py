@@ -71,7 +71,7 @@ def package():
     for source in sorted(bundle.iterdir()):
         if source.suffix in (".rs", ".toml"):
             files[f"mixins/viafabricplus/{source.name}"] = source.read_bytes()
-    out = ROOT / "dist" / f"viafabricplus-{native['version']}.hnmod"
+    out = ROOT / "dist" / f"viahorizon-{native['version']}.hnmod"
     out.parent.mkdir(exist_ok=True)
     with zipfile.ZipFile(out, "w", compression=zipfile.ZIP_DEFLATED) as archive:
         for name, data in sorted(files.items()):

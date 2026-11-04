@@ -12,7 +12,7 @@ fn prepare_chat(
     if let Some(auth) = auth {
         match crate::auth::vfp_certificates::get(auth) {
             Ok(identity) => vfp_chat_signing::prepare(Some(identity)),
-            Err(error) => eprintln!("ViaFabricPlus chat: {error}"),
+            Err(error) => eprintln!("ViaHorizon chat: {error}"),
         }
     }
 }

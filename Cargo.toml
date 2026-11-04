@@ -1,18 +1,18 @@
 [package]
-name = "viafabricplus-native"
-version = "0.8.2-dev"
+name = "viahorizon-native"
+version = "0.8.3-dev"
 edition = "2024"
 rust-version = "1.95"
 license = "GPL-3.0-or-later"
 publish = false
 autotests = false
-description = "Release-only ViaFabricPlus port for Horizon 26.3 (early development)"
+description = "Minecraft server version selection for Horizon 26.3"
 
 [lib]
 path = "src/lib.rs"
 
 [[bin]]
-name = "vfp-native"
+name = "vh-native"
 path = "cli/main.rs"
 
 [dependencies]

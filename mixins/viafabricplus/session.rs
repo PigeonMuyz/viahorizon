@@ -1036,7 +1036,7 @@ impl Session {
         }
         if self.boundary {
             return Some(Err(Error::new(format!(
-                "ViaFabricPlus Native: {} configuration preview reached the world-entry boundary. Gameplay conversion is incomplete; world entry is disabled.",
+                "ViaHorizon: {} configuration preview reached the world-entry boundary. Gameplay conversion is incomplete; world entry is disabled.",
                 self.login.target.first
             ))));
         }

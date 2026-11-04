@@ -1,4 +1,4 @@
-use viafabricplus_native::{vfp_core::*, vfp_tables as t, vfp_wire as w};
+use viahorizon_native::{vfp_core::*, vfp_tables as t, vfp_wire as w};
 fn old(name: &str) -> i32 {
     w::packet_id(t::OLD_CLIENTBOUND, name).unwrap()
 }
@@ -13,7 +13,7 @@ fn var(v: i32) -> Vec<u8> {
 
 #[test]
 fn advisory_section_counts_preserve_the_entire_signed_short_domain() {
-    use viafabricplus_native::vfp_mapping::*;
+    use viahorizon_native::vfp_mapping::*;
     fn check<M: Maps>() {
         for non_air in [i16::MIN, -1, 0, 4096, 4097, 8192, i16::MAX] {
             let mut input = non_air.to_be_bytes().to_vec();
@@ -67,7 +67,7 @@ fn advisory_section_counts_preserve_the_entire_signed_short_domain() {
 
 #[test]
 fn vanilla_section_padding_is_bounded_by_the_current_dimension() {
-    use viafabricplus_native::vfp_mapping::V1193;
+    use viahorizon_native::vfp_mapping::V1193;
     let mut data = Vec::new();
     for _ in 0..24 {
         data.extend_from_slice(&[0, 0, 0, 0, 0, 0, 38, 0]);
@@ -92,7 +92,7 @@ fn vanilla_section_padding_is_bounded_by_the_current_dimension() {
 
 #[test]
 fn dimension_height_tracking_changes_with_world_selection_and_resets() {
-    let mut registry = viafabricplus_native::vfp_registry_access::Registries::default();
+    let mut registry = viahorizon_native::vfp_registry_access::Registries::default();
     registry
         .dimension_heights(vec![Some(384), Some(256), None])
         .unwrap();
@@ -113,7 +113,7 @@ fn dimension_height_tracking_changes_with_world_selection_and_resets() {
 
 #[test]
 fn every_pre_261_family_adds_fluid_counts_without_remapping_source_ids_twice() {
-    use viafabricplus_native::{vfp_mapping::*, vfp_tables_12111};
+    use viahorizon_native::{vfp_mapping::*, vfp_tables_12111};
     fn check<M: Maps>() {
         let mut ranges = Cursor::new(vfp_tables_12111::FLUID_RANGES_261);
         let fluid_261 = ranges.varint().unwrap();
@@ -408,7 +408,7 @@ fn incomplete_packet_layouts_remain_explicit_errors() {
 }
 #[test]
 fn previous_release_maps_compose_into_the_native_registry_domains() {
-    use viafabricplus_native::{vfp_tables as current, vfp_tables_261 as previous};
+    use viahorizon_native::{vfp_tables as current, vfp_tables_261 as previous};
     for (old, next) in [
         (previous::BLOCKS, current::BLOCKS),
         (previous::BLOCKSTATES, current::BLOCKSTATES),

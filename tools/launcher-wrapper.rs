@@ -27,7 +27,7 @@ fn main() {
     // Arguments can contain private session-file paths; never print them.
     let code = run().unwrap_or_else(|_| {
         eprintln!(
-            "Could not start the prebuilt ViaFabricPlus client. Check the instance wrapper path."
+            "Could not start the prebuilt ViaHorizon client. Check the instance wrapper path."
         );
         1
     });
