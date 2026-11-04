@@ -1,0 +1,32 @@
+{
+  "version": "0.8.2-dev",
+  "horizon_revision": "d5f484c89f6e88cee27ad104860587a94b379cd5",
+  "bundle_sha256": "a7386a5a0f0a6c00b6292f2e69184bc1c97e916b1ee66ce04cfa439dc4e38011",
+  "package": {
+    "name": "viafabricplus-0.8.2-dev.hnmod",
+    "sha256": "731b303922d55fe2989b8f49b2e279276cf34a60d2d544a5dd8373550c00f8b9"
+  },
+  "tests": {
+    "rust-tests-0.8.2.log": 46,
+    "transport-tests-0.8.2.log": 209
+  },
+  "live_checks": [
+    {
+      "release": "1.7.2",
+      "checks": 3
+    },
+    {
+      "release": "1.7.2",
+      "checks": 15
+    },
+    {
+      "release": "1.19.2",
+      "checks": 12
+    }
+  ],
+  "notes": [
+    "Published measurements describe one matched route on the validation machine.",
+    "Initial 1.19.2 Auto detection timed out while compilation ran; an isolated rerun passed.",
+    "Private test transcripts, accounts, world files and session metadata are not included."
+  ]
+}

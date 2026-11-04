@@ -1,0 +1,1 @@
+These are generated, deliberately public RSA-2048 test keys, not account credentials. The test service signs the fixture certificate for profile UUID 1 with a 2100 expiry. The RSA PEM label intentionally wraps PKCS#8 bytes to exercise the provider's compatibility handling. These files are excluded from the native mod archive.

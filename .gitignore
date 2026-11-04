@@ -1,0 +1,12 @@
+/target/
+/dist/
+__pycache__/
+*.log
+
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+*.pfx
+*.p12
+*.key

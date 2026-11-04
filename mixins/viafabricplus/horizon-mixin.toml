@@ -1,0 +1,933 @@
+[mod]
+id = "viafabricplus"
+version = "0.8.2-dev"
+priority = 100
+
+[[module]]
+id = "release_chain"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_chain"
+source = "release_chain.rs"
+visibility = "pub"
+
+[[module]]
+id = "release_chain_data"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_chain_data"
+source = "release_chain_data.rs"
+visibility = "pub"
+
+[[module]]
+id = "release_chain_resources"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_chain_resources"
+source = "release_chain_resources.rs"
+visibility = "pub"
+
+[[module]]
+id = "release_codec"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_codec"
+source = "release_codec.rs"
+visibility = "pub"
+
+[[module]]
+id = "release_rewrite"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_rewrite"
+source = "release_rewrite.rs"
+visibility = "pub"
+
+[[module]]
+id = "release_chat"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_chat"
+source = "release_chat.rs"
+visibility = "pub"
+
+[[module]]
+id = "release_world"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_world"
+source = "release_world.rs"
+visibility = "pub"
+
+[[module]]
+id = "release_columns"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_columns"
+source = "release_columns.rs"
+visibility = "pub"
+
+[[module]]
+id = "release_inventory"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_inventory"
+source = "release_inventory.rs"
+visibility = "pub"
+
+[[module]]
+id = "release_older"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_older"
+source = "release_older.rs"
+visibility = "pub"
+
+[[module]]
+id = "release_pre18"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_pre18"
+source = "release_pre18.rs"
+visibility = "pub"
+
+[[module]]
+id = "release_metadata"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_metadata"
+source = "release_metadata.rs"
+visibility = "pub"
+
+[[module]]
+id = "release_text"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_text"
+source = "release_text.rs"
+visibility = "pub"
+
+[[module]]
+id = "release_113"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_113"
+source = "release_113.rs"
+visibility = "pub"
+
+[[module]]
+id = "release_110"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_110"
+source = "release_110.rs"
+visibility = "pub"
+
+[[module]]
+id = "release_flatten"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_flatten"
+source = "release_flatten.rs"
+visibility = "pub"
+
+[[module]]
+id = "release_connections"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_connections"
+source = "release_connections.rs"
+visibility = "pub"
+
+[[module]]
+id = "release_connection_data"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_connection_data"
+source = "release_connection_data.rs"
+visibility = "pub"
+
+[[module]]
+id = "release_18"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_18"
+source = "release_18.rs"
+visibility = "pub"
+
+[[module]]
+id = "release_17"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_17"
+source = "release_17.rs"
+visibility = "pub"
+
+[[module]]
+id = "release_18_data"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_release_18_data"
+source = "release_18_data.rs"
+visibility = "pub"
+
+# Internal connection hooks require an exact source pin, not hooks-only mode.
+[compatibility]
+horizon_revision = "d5f484c89f6e88cee27ad104860587a94b379cd5"
+
+[[module]]
+id = "chat_signing"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_chat_signing"
+source = "chat_signing.rs"
+visibility = "pub"
+
+[[module]]
+id = "certificates"
+file = "crates/horizon-client-render/src/auth.rs"
+name = "vfp_certificates"
+source = "certificates.rs"
+visibility = "pub"
+
+[[injection]]
+id = "prepare_chat"
+kind = "HEAD"
+target = "horizon_client::net::run"
+helper = "prepare_chat.rs"
+bindings = [
+  { name = "auth", ty = "Option<&crate::auth::AuthSession>", value = "auth" },
+  { name = "local", ty = "&Option<horizon_protocol::connection::Pipe>", value = "&local" },
+]
+
+[[module]]
+id = "full_click"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_full_click"
+source = "full_click.rs"
+visibility = "pub"
+
+[[module]]
+id = "capture_session"
+file = "crates/horizon-client/src/net.rs"
+name = "vfp_capture_session"
+source = "capture_session.rs"
+visibility = "pub"
+
+[[injection]]
+id = "legacy_sword_start"
+kind = "HEAD"
+cancellable = true
+target = "horizon_client::game::remote::Game<'_>::remote_use_item"
+helper = "legacy_sword_start.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "hand", ty = "horizon_client::first_person::Hand", value = "hand" },
+]
+
+[[injection]]
+id = "queued_legacy_send"
+kind = "HEAD"
+cancellable = true
+target = "horizon_client::net::Session::send"
+helper = "queued_send.rs"
+bindings = [
+  { name = "session", ty = "&crate::net::Session", value = "self" },
+  { name = "packet", ty = "&horizon_protocol::packets::play::Serverbound", value = "&packet" },
+]
+
+[[injection]]
+id = "legacy_block_predictions"
+kind = "HEAD"
+cancellable = true
+target = "horizon_client::game::remote::Game<'_>::end_predictions"
+helper = "legacy_block_predictions.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "sequence", ty = "i32", value = "sequence" },
+]
+
+[[injection]]
+id = "legacy_server_block"
+kind = "HEAD"
+target = "horizon_client::game::remote::Game<'_>::server_block"
+helper = "legacy_server_block.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "pos", ty = "[i32; 3]", value = "pos" },
+]
+
+[[injection]]
+id = "legacy_sword_hold"
+kind = "HEAD"
+cancellable = true
+target = "horizon_client::game::remote::Game<'_>::held_until_released"
+helper = "legacy_sword_hold.rs"
+bindings = [
+  { name = "game", ty = "&crate::game::Game<'_>", value = "self" },
+  { name = "stack", ty = "&horizon_client::items::ItemStack", value = "stack" },
+]
+
+[[injection]]
+id = "legacy_sword_render"
+kind = "HEAD"
+target = "horizon_client::game::Game<'_>::hand_geometry"
+helper = "legacy_sword_render.rs"
+bindings = [{ name = "game", ty = "&crate::game::Game<'_>", value = "&*self" }]
+
+[[injection]]
+id = "legacy_sword_pose"
+kind = "HEAD"
+cancellable = true
+target = "horizon_client::first_person::item_pose"
+helper = "legacy_sword_pose.rs"
+bindings = [
+  { name = "left", ty = "bool", value = "left" },
+  { name = "inverse_height", ty = "f32", value = "inverse_height" },
+  { name = "pose", ty = "crate::first_person::ItemPose", value = "pose" },
+]
+
+[[injection]]
+id = "legacy_boat_ride"
+kind = "HEAD"
+cancellable = true
+target = "horizon_client::game::remote_vehicles::Game<'_>::remote_ride"
+helper = "legacy_boat_ride.rs"
+bindings = [{ name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" }]
+
+[[injection]]
+id = "legacy_vehicle_packets"
+kind = "HEAD"
+cancellable = true
+target = "horizon_client::game::remote_vehicles::Game<'_>::remote_vehicle_packets"
+helper = "legacy_vehicle_packets.rs"
+bindings = [{ name = "game", ty = "&crate::game::Game<'_>", value = "self" }]
+
+[[injection]]
+id = "legacy_menu_slots"
+kind = "HEAD"
+cancellable = true
+target = "horizon_client::game::remote::Game<'_>::remote_menu_ops"
+helper = "legacy_menu_slots.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "ops", ty = "&[(Option<usize>, i32, horizon_client::menu::Input)]", value = "ops" },
+]
+
+[[injection]]
+id = "legacy_trade"
+kind = "HEAD"
+cancellable = true
+target = "horizon_client::game::trading::Game<'_>::try_move_items"
+helper = "legacy_trade.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "index", ty = "usize", value = "index" },
+]
+
+[[injection]]
+id = "legacy_skins"
+kind = "HEAD"
+target = "horizon_client::game::remote::Game<'_>::update_remote_skins"
+helper = "legacy_skins.rs"
+bindings = [{ name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" }]
+
+[[injection]]
+id = "capture_clicks"
+kind = "HEAD"
+cancellable = true
+target = "horizon_client::game::remote::Game<'_>::send_clicks"
+helper = "capture_clicks.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "container", ty = "i32", value = "container" },
+  { name = "clicks", ty = "&[crate::game::remote::Predicted]", value = "&clicks" },
+]
+
+[[injection]]
+id = "capture_throw"
+kind = "HEAD"
+cancellable = true
+target = "horizon_client::game::remote::Game<'_>::remote_throw"
+helper = "capture_throw.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "right", ty = "bool", value = "right" },
+  { name = "input", ty = "horizon_client::menu::Input", value = "input" },
+]
+
+[[module]]
+id = "tables_1193"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_tables_1193"
+source = "tables_1193.rs"
+visibility = "pub"
+
+[[module]]
+id = "registry_1193"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_registry_1193"
+source = "registry_1193.rs"
+visibility = "pub"
+
+[[module]]
+id = "transition_1193"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_transition_1193"
+source = "transition_1193.rs"
+visibility = "pub"
+
+[[module]]
+id = "tables_1194"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_tables_1194"
+source = "tables_1194.rs"
+visibility = "pub"
+
+[[module]]
+id = "transition_120"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_transition_120"
+source = "transition_120.rs"
+visibility = "pub"
+
+[[module]]
+id = "legacy_nbt"
+file = "crates/horizon-protocol/src/buf.rs"
+name = "vfp_legacy_nbt"
+source = "legacy_nbt.rs"
+visibility = "pub"
+
+[[module]]
+id = "tables_120"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_tables_120"
+source = "tables_120.rs"
+visibility = "pub"
+
+[[module]]
+id = "transition_1202"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_transition_1202"
+source = "transition_1202.rs"
+visibility = "pub"
+
+[[module]]
+id = "tables_1202"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_tables_1202"
+source = "tables_1202.rs"
+visibility = "pub"
+
+[[module]]
+id = "transition_1203"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_transition_1203"
+source = "transition_1203.rs"
+visibility = "pub"
+
+[[module]]
+id = "core"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_core"
+source = "core.rs"
+visibility = "pub"
+
+[[module]]
+id = "tables"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_tables"
+source = "tables.rs"
+visibility = "pub"
+
+[[module]]
+id = "tables_261_native"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_tables_261_native"
+source = "tables_261_native.rs"
+visibility = "pub"
+
+[[module]]
+id = "tables_1217"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_tables_1217"
+source = "tables_1217.rs"
+visibility = "pub"
+
+[[module]]
+id = "tables_121"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_tables_121"
+source = "tables_121.rs"
+visibility = "pub"
+
+[[module]]
+id = "tables_1212"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_tables_1212"
+source = "tables_1212.rs"
+visibility = "pub"
+
+[[module]]
+id = "tables_1214"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_tables_1214"
+source = "tables_1214.rs"
+visibility = "pub"
+
+[[module]]
+id = "tables_1215"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_tables_1215"
+source = "tables_1215.rs"
+visibility = "pub"
+
+[[module]]
+id = "tables_1216"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_tables_1216"
+source = "tables_1216.rs"
+visibility = "pub"
+
+[[module]]
+id = "tables_1219"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_tables_1219"
+source = "tables_1219.rs"
+visibility = "pub"
+
+[[module]]
+id = "tables_12111"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_tables_12111"
+source = "tables_12111.rs"
+visibility = "pub"
+
+[[module]]
+id = "registry_access"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_registry_access"
+source = "registry_access.rs"
+visibility = "pub"
+
+[[module]]
+id = "mapping"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_mapping"
+source = "mapping.rs"
+visibility = "pub"
+
+[[module]]
+id = "wire"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_wire"
+source = "wire.rs"
+visibility = "pub"
+
+[[module]]
+id = "items_121"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_items_121"
+source = "items_121.rs"
+visibility = "pub"
+
+[[module]]
+id = "tables_1205"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_tables_1205"
+source = "tables_1205.rs"
+visibility = "pub"
+
+[[module]]
+id = "registry_1205"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_registry_1205"
+source = "registry_1205.rs"
+visibility = "pub"
+
+[[module]]
+id = "modifiers_1205"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_modifiers_1205"
+source = "modifiers_1205.rs"
+visibility = "pub"
+
+[[module]]
+id = "configuration_1205"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_configuration_1205"
+source = "configuration_1205.rs"
+visibility = "pub"
+
+[[module]]
+id = "attributes_1205"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_attributes_1205"
+source = "attributes_1205.rs"
+visibility = "pub"
+
+[[module]]
+id = "tables_1203"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_tables_1203"
+source = "tables_1203.rs"
+visibility = "pub"
+
+[[module]]
+id = "registry_1203"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_registry_1203"
+source = "registry_1203.rs"
+visibility = "pub"
+
+[[module]]
+id = "data_versions"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_data_versions"
+source = "data_versions.rs"
+visibility = "pub"
+
+[[module]]
+id = "items_1203"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_items_1203"
+source = "items_1203.rs"
+visibility = "pub"
+
+[[module]]
+id = "configuration_1203"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_configuration_1203"
+source = "configuration_1203.rs"
+visibility = "pub"
+
+[[module]]
+id = "entities_1203"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_entities_1203"
+source = "entities_1203.rs"
+visibility = "pub"
+
+[[module]]
+id = "recipes_121"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_recipes_121"
+source = "recipes_121.rs"
+visibility = "pub"
+
+[[module]]
+id = "transition_121"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_transition_121"
+source = "transition_121.rs"
+visibility = "pub"
+
+[[module]]
+id = "items_1214"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_items_1214"
+source = "items_1214.rs"
+visibility = "pub"
+
+[[module]]
+id = "items"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_items"
+source = "items.rs"
+visibility = "pub"
+
+[[module]]
+id = "world_1214"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_world_1214"
+source = "world_1214.rs"
+visibility = "pub"
+
+[[module]]
+id = "world"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_world"
+source = "world.rs"
+visibility = "pub"
+
+[[module]]
+id = "configuration"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_configuration"
+source = "configuration.rs"
+visibility = "pub"
+
+[[module]]
+id = "tables_261"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_tables_261"
+source = "tables_261.rs"
+visibility = "pub"
+
+[[module]]
+id = "configuration_1217"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_configuration_1217"
+source = "configuration_1217.rs"
+visibility = "pub"
+
+[[module]]
+id = "transition_1214"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_transition_1214"
+source = "transition_1214.rs"
+visibility = "pub"
+
+[[module]]
+id = "transition_1217"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_transition_1217"
+source = "transition_1217.rs"
+visibility = "pub"
+
+[[module]]
+id = "configuration_1219"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_configuration_1219"
+source = "configuration_1219.rs"
+visibility = "pub"
+
+[[module]]
+id = "configuration_12111"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_configuration_12111"
+source = "configuration_12111.rs"
+visibility = "pub"
+
+[[module]]
+id = "configuration_261"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_configuration_261"
+source = "configuration_261.rs"
+visibility = "pub"
+
+[[module]]
+id = "transition_1219"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_transition_1219"
+source = "transition_1219.rs"
+visibility = "pub"
+
+[[module]]
+id = "transition_12111"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_transition_12111"
+source = "transition_12111.rs"
+visibility = "pub"
+
+[[module]]
+id = "transition_261"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_transition_261"
+source = "transition_261.rs"
+visibility = "pub"
+
+[[module]]
+id = "registry"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_registry"
+source = "registry.rs"
+visibility = "pub"
+
+[[module]]
+id = "registry_data"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_registry_data"
+source = "registry_data.rs"
+visibility = "pub"
+
+[[module]]
+id = "entities"
+file = "crates/horizon-protocol/src/entity_data.rs"
+name = "vfp_entities"
+source = "entities.rs"
+visibility = "pub"
+
+[[module]]
+id = "session"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_session"
+source = "session.rs"
+visibility = "pub"
+
+[[module]]
+id = "mining"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_mining"
+source = "mining.rs"
+visibility = "pub"
+
+[[module]]
+id = "hash"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_hash"
+source = "hash.rs"
+visibility = "pub"
+
+[[module]]
+id = "prediction"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_prediction"
+source = "prediction.rs"
+visibility = "pub"
+
+[[module]]
+id = "auxiliary"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_auxiliary"
+source = "auxiliary.rs"
+visibility = "pub"
+
+[[module]]
+id = "ui"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_ui"
+source = "ui.rs"
+visibility = "pub"
+
+[[module]]
+id = "values"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_values"
+source = "values.rs"
+visibility = "pub"
+
+[[module]]
+id = "dialog"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_dialog"
+source = "dialog.rs"
+visibility = "pub"
+
+[[module]]
+id = "chat"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_chat"
+source = "chat.rs"
+visibility = "pub"
+
+[[module]]
+id = "text_1214"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_text_1214"
+source = "text_1214.rs"
+visibility = "pub"
+
+[[module]]
+id = "play"
+file = "crates/horizon-protocol/src/lib.rs"
+name = "vfp_play"
+source = "play.rs"
+visibility = "pub"
+
+[[module]]
+id = "bridge"
+file = "crates/horizon-protocol/src/connection.rs"
+name = "vfp_bridge"
+source = "bridge.rs"
+visibility = "pub"
+
+[[module]]
+id = "runtime"
+file = "crates/horizon-client/src/game.rs"
+name = "viafabricplus"
+source = "runtime.rs"
+
+[[injection]]
+id = "chat_format"
+kind = "HEAD"
+cancellable = true
+target = "horizon_client::game::remote::Game<'_>::format_chat"
+helper = "chat_format.rs"
+bindings = [
+  { name = "bound", ty = "&horizon_protocol::packets::play::ChatTypeBound", value = "bound" },
+  { name = "content", ty = "&serde_json::Value", value = "&content" },
+]
+
+[[injection]]
+id = "send"
+kind = "HEAD"
+cancellable = true
+target = "horizon_protocol::connection::ConnWriter::send"
+helper = "send.rs"
+bindings = [
+  { name = "writer", ty = "&mut crate::connection::ConnWriter", value = "&mut *self" },
+  { name = "body", ty = "&[u8]", value = "body" },
+]
+
+[[injection]]
+id = "chat_filter_read"
+kind = "HEAD"
+cancellable = true
+target = "horizon_protocol::packets::play::<FilterMask as Codec<(i32,Vec<i64>)>>::read"
+helper = "chat_read.rs"
+bindings = [{ name = "reader", ty = "&mut crate::buf::Reader<'_>", value = "r" }]
+
+[[injection]]
+id = "chat_filter_write"
+kind = "HEAD"
+cancellable = true
+target = "horizon_protocol::packets::play::<FilterMask as Codec<(i32,Vec<i64>)>>::write"
+helper = "chat_write.rs"
+bindings = [
+  { name = "value", ty = "&(i32, Vec<i64>)", value = "v" },
+  { name = "writer", ty = "&mut crate::buf::Writer", value = "w" },
+]
+
+[[injection]]
+id = "recv"
+kind = "HEAD"
+cancellable = true
+target = "horizon_protocol::connection::ConnReader::recv"
+helper = "recv.rs"
+bindings = [
+  { name = "reader", ty = "&mut crate::connection::ConnReader", value = "&mut *self" },
+]
+
+[[injection]]
+id = "stream_read"
+kind = "HEAD"
+cancellable = true
+target = "horizon_protocol::connection::<Stream as Read>::read"
+helper = "stream_read.rs"
+bindings = [
+  {name = "stream",ty = "&mut crate::connection::Stream",value = "&mut *self"},
+  {name = "output",ty = "&mut [u8]",value = "out"},
+]
+
+[[injection]]
+id = "frame"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::Game<'_>::native_frame"
+helper = "frame.rs"
+bindings = [{ name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" }]
+
+[[injection]]
+id = "connect"
+kind = "HEAD"
+target = "horizon_client::game::remote::Game<'_>::join_server"
+helper = "frame.rs"
+bindings = [{ name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" }]
+
+[[injection]]
+id = "list"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::Game<'_>::native_mods"
+helper = "list.rs"
+bindings = [{ name = "mods", ty = "&mut Vec<crate::game::native_hooks::NativeMod>", value = "&mut *mods" }]
+
+[[injection]]
+id = "settings"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::Game<'_>::native_settings"
+helper = "settings.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "mod_id", ty = "&str", value = "mod_id" },
+  { name = "buttons", ty = "&mut Vec<String>", value = "&mut *buttons" },
+]
+
+[[injection]]
+id = "click"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::Game<'_>::native_settings_click"
+helper = "click.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "mod_id", ty = "&str", value = "mod_id" },
+  { name = "button", ty = "usize", value = "button" },
+]
+
+[[injection]]
+id = "command"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::Game<'_>::native_command"
+helper = "command.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "command", ty = "&str", value = "command" },
+  { name = "ran", ty = "&mut bool", value = "&mut *ran" },
+]

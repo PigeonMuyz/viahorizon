@@ -1,0 +1,2154 @@
+{
+  "idle": {
+    "avg_fps": 116.55246985068912,
+    "cpu": {
+      "avg_ms": 0.8147255111867049,
+      "max_ms": 2.9488000869750977,
+      "p50_ms": 0.7265999913215637,
+      "p95_ms": 1.4007999897003174,
+      "p99_ms": 1.861299991607666
+    },
+    "frames": 635,
+    "gpu": {
+      "avg_ms": 1.196887987523567,
+      "max_ms": 7.196896076202393,
+      "p50_ms": 0.7229440212249756,
+      "p95_ms": 3.330143928527832,
+      "p99_ms": 4.196256160736084
+    },
+    "low_01pct_fps": 109.05125318212102,
+    "low_1pct_fps": 110.08902908963924,
+    "max_ms": 9.170000076293944,
+    "p50_ms": 8.537399291992188,
+    "p95_ms": 8.796099662780762,
+    "p99_ms": 9.024999618530272,
+    "phases_avg_ms": {
+      "prepare": 0.27796929157155703,
+      "render": 0.4527218896103656,
+      "tick": 0.062114645431265526,
+      "update": 0.02226078780001308
+    },
+    "seconds": 5.448189993858337,
+    "slow_phases_avg_ms": {
+      "prepare": 0.44547144004276823,
+      "render": 1.1507142569337572,
+      "tick": 0.36572856911724166,
+      "update": 0.31118573314909426
+    }
+  },
+  "streaming": {
+    "avg_fps": 69.95681875919986,
+    "cpu": {
+      "avg_ms": 6.928698136434115,
+      "max_ms": 643.9791870117188,
+      "p50_ms": 0.6908000111579895,
+      "p95_ms": 5.06380033493042,
+      "p99_ms": 201.656005859375
+    },
+    "frames": 1431,
+    "gpu": {
+      "avg_ms": 1.064068204592484,
+      "max_ms": 13.174304008483888,
+      "p50_ms": 0.7136639952659607,
+      "p95_ms": 3.0966720581054688,
+      "p99_ms": 5.795487880706787
+    },
+    "low_01pct_fps": 1.6845657778261935,
+    "low_1pct_fps": 3.1404975591004733,
+    "max_ms": 644.0586547851562,
+    "p50_ms": 8.538599967956543,
+    "p95_ms": 9.1358003616333,
+    "p99_ms": 201.69320678710935,
+    "phases_avg_ms": {
+      "prepare": 0.8784318523107918,
+      "render": 0.45269678564316573,
+      "tick": 3.5437205669012606,
+      "update": 2.0542484994668246
+    },
+    "seconds": 20.45547561168671,
+    "slow_phases_avg_ms": {
+      "prepare": 34.34432575305303,
+      "render": 0.8530266761779786,
+      "tick": 189.75095660074925,
+      "update": 93.43530166434743
+    }
+  },
+  "samples": [
+    {
+      "block_entities": 0,
+      "border": {
+        "center": [
+          0.0,
+          0.0
+        ],
+        "size": 59999968.0
+      },
+      "carts": [],
+      "chunks": 169,
+      "creative": true,
+      "day_time": 1119,
+      "debug": {
+        "advanced_tooltips": false,
+        "chunk_borders": false,
+        "clipboard": null,
+        "hitboxes": false,
+        "overlay": false,
+        "pause_menu": true,
+        "pause_on_lost_focus": true
+      },
+      "destroying": [],
+      "dimension": "minecraft:overworld",
+      "dirty_light": 0,
+      "display": {
+        "height": 1440,
+        "refresh_hz": 120,
+        "scale": 1.0,
+        "width": 2560
+      },
+      "fangs_vertices": 0,
+      "fight": {
+        "alive_crystals": 0,
+        "crystal_list": [],
+        "crystals": 0,
+        "dragon": null,
+        "exit_portal": null,
+        "killed": false,
+        "players": false,
+        "respawn": null
+      },
+      "fishing": null,
+      "fps": 117.48908233642578,
+      "frames": 1313,
+      "generated_chunks": 221,
+      "heard": {
+        "minecraft:entity.chicken.ambient": 1,
+        "minecraft:entity.chicken.step": 8,
+        "minecraft:entity.cow.ambient": 1,
+        "minecraft:entity.cow.step": 1,
+        "minecraft:entity.sheep.ambient": 1,
+        "minecraft:entity.sheep.step": 2
+      },
+      "held": null,
+      "keys": [],
+      "lightning": {
+        "bolts": 0,
+        "flash": 0,
+        "flashes": 0,
+        "struck": 0
+      },
+      "lod": {
+        "active_tiles": 0,
+        "cached_tiles": 0,
+        "distance": 0,
+        "effective_distance": 0,
+        "far_detail": "full",
+        "pending_observations": 0,
+        "refined_samples": 0,
+        "resident_quads": 0,
+        "sampled_target_tiles": 0,
+        "source": "none",
+        "source_attempted": false,
+        "target_tiles": 0,
+        "terrain_distance": 6
+      },
+      "maps": [],
+      "meshed_sections": 4189,
+      "mobs": 109,
+      "music": null,
+      "name_tags": [],
+      "objects": [],
+      "offhand": null,
+      "particles": {
+        "dragon_breath": 200,
+        "tinted_leaves": 54,
+        "underwater": 13
+      },
+      "pending_chunks": 0,
+      "pending_uploads": 0,
+      "physical_keys": [],
+      "pitch": 0.0,
+      "player": {
+        "food": 20,
+        "health": 20.0,
+        "max_health": null,
+        "on_ground": true,
+        "position": [
+          228.5,
+          70.0,
+          253.5
+        ],
+        "velocity": [
+          0.0,
+          -0.0784000015258789,
+          0.0
+        ]
+      },
+      "projectiles": [],
+      "render_distance": 6,
+      "renderer": {
+        "arena_bytes": 50331648,
+        "backend": "Vulkan",
+        "culled_sections": [
+          [
+            19,
+            29
+          ],
+          0.10241423547267914
+        ],
+        "device_type": "discrete",
+        "drawn_sections": 81,
+        "driver": "NVIDIA 617.14",
+        "gpu": "NVIDIA GeForce RTX 2080",
+        "gpu_allocated_bytes": 249636992,
+        "gpu_reserved_bytes": 603979776,
+        "present_mode": "Immediate",
+        "resident_sections": 585,
+        "section_draw_calls": 3,
+        "section_draws": 161,
+        "section_vertex_bytes": 45254976,
+        "size": [
+          1280,
+          720
+        ],
+        "uploaded_bytes": 60990528,
+        "vendor": "nvidia"
+      },
+      "riding": null,
+      "rockets": 0,
+      "screen": "playing",
+      "selected": 1,
+      "server": {
+        "address": "127.0.0.1:5892",
+        "chat": [
+          "[Server: commands.tp.success.coordinates]"
+        ],
+        "chunks": 169,
+        "dead_players": [],
+        "decode_errors": 0,
+        "dimension": "minecraft:overworld",
+        "entities": {
+          "minecraft:bat": 11,
+          "minecraft:chicken": 14,
+          "minecraft:cow": 8,
+          "minecraft:creeper": 17,
+          "minecraft:item": 3,
+          "minecraft:pig": 8,
+          "minecraft:sheep": 4,
+          "minecraft:skeleton": 18,
+          "minecraft:spider": 7,
+          "minecraft:squid": 2,
+          "minecraft:witch": 4,
+          "minecraft:wolf": 5,
+          "minecraft:zombie": 9,
+          "minecraft:zombie_villager": 2
+        },
+        "entity_id": 1850,
+        "food": 20,
+        "game_mode": 1,
+        "health": 20.0,
+        "joined": true,
+        "loaded": true,
+        "lying_players": [],
+        "name": "VfpSmoke",
+        "own_body": false,
+        "player_equipment": [],
+        "player_model": true,
+        "player_positions": [],
+        "players": [
+          "VfpSmoke"
+        ],
+        "status": "Loading terrain...",
+        "text_display_vertices": 0,
+        "text_displays": 0
+      },
+      "sidebar": null,
+      "sounds": {
+        "channels": 0,
+        "decoded": 0,
+        "decoded_mib": 0,
+        "events": [],
+        "handles": 0,
+        "instances": 0,
+        "playing": 0,
+        "queued": 0,
+        "ticking": 0,
+        "used": [
+          0,
+          0
+        ]
+      },
+      "stopped_sounds": {},
+      "streaming": {
+        "decorating": 0,
+        "finishing": 0,
+        "generating": 0,
+        "lighting": 0,
+        "meshing": 0,
+        "protos": 0,
+        "queued": 0
+      },
+      "target": null,
+      "ticks": 298,
+      "tridents": 0,
+      "uptime_seconds": 16.4071248,
+      "using": null,
+      "yaw": 0.0
+    },
+    {
+      "block_entities": 0,
+      "border": {
+        "center": [
+          0.0,
+          0.0
+        ],
+        "size": 59999968.0
+      },
+      "carts": [],
+      "chunks": 161,
+      "creative": true,
+      "day_time": 1167,
+      "debug": {
+        "advanced_tooltips": false,
+        "chunk_borders": false,
+        "clipboard": null,
+        "hitboxes": false,
+        "overlay": false,
+        "pause_menu": true,
+        "pause_on_lost_focus": true
+      },
+      "destroying": [],
+      "dimension": "minecraft:overworld",
+      "dirty_light": 0,
+      "display": {
+        "height": 1440,
+        "refresh_hz": 120,
+        "scale": 1.0,
+        "width": 2560
+      },
+      "fangs_vertices": 0,
+      "fight": {
+        "alive_crystals": 0,
+        "crystal_list": [],
+        "crystals": 0,
+        "dragon": null,
+        "exit_portal": null,
+        "killed": false,
+        "players": false,
+        "respawn": null
+      },
+      "fishing": null,
+      "fps": 68.57096862792969,
+      "frames": 1510,
+      "generated_chunks": 265,
+      "heard": {
+        "minecraft:entity.chicken.ambient": 1,
+        "minecraft:entity.chicken.step": 8,
+        "minecraft:entity.cow.ambient": 1,
+        "minecraft:entity.cow.step": 1,
+        "minecraft:entity.player.splash.high_speed": 1,
+        "minecraft:entity.sheep.ambient": 1,
+        "minecraft:entity.sheep.step": 2
+      },
+      "held": null,
+      "keys": [],
+      "lightning": {
+        "bolts": 0,
+        "flash": 0,
+        "flashes": 0,
+        "struck": 0
+      },
+      "lod": {
+        "active_tiles": 0,
+        "cached_tiles": 0,
+        "distance": 0,
+        "effective_distance": 0,
+        "far_detail": "full",
+        "pending_observations": 0,
+        "refined_samples": 0,
+        "resident_quads": 0,
+        "sampled_target_tiles": 0,
+        "source": "none",
+        "source_attempted": false,
+        "target_tiles": 0,
+        "terrain_distance": 6
+      },
+      "maps": [],
+      "meshed_sections": 5132,
+      "mobs": 99,
+      "music": null,
+      "name_tags": [],
+      "objects": [],
+      "offhand": null,
+      "particles": {
+        "bubble": 13,
+        "dragon_breath": 200,
+        "splash": 13,
+        "tinted_leaves": 56,
+        "underwater": 439
+      },
+      "pending_chunks": 0,
+      "pending_uploads": 0,
+      "physical_keys": [],
+      "pitch": 0.0,
+      "player": {
+        "food": 20,
+        "health": 20.0,
+        "max_health": null,
+        "on_ground": true,
+        "position": [
+          292.5,
+          62.0,
+          253.5
+        ],
+        "velocity": [
+          0.0,
+          -0.005,
+          0.0
+        ]
+      },
+      "projectiles": [],
+      "render_distance": 6,
+      "renderer": {
+        "arena_bytes": 50331648,
+        "backend": "Vulkan",
+        "culled_sections": [
+          [
+            8,
+            60
+          ],
+          0.05756578966975212
+        ],
+        "device_type": "discrete",
+        "drawn_sections": 60,
+        "driver": "NVIDIA 617.14",
+        "gpu": "NVIDIA GeForce RTX 2080",
+        "gpu_allocated_bytes": 256659904,
+        "gpu_reserved_bytes": 603979776,
+        "present_mode": "Immediate",
+        "resident_sections": 553,
+        "section_draw_calls": 2,
+        "section_draws": 150,
+        "section_vertex_bytes": 41480256,
+        "size": [
+          1280,
+          720
+        ],
+        "uploaded_bytes": 78395520,
+        "vendor": "nvidia"
+      },
+      "riding": null,
+      "rockets": 0,
+      "screen": "playing",
+      "selected": 1,
+      "server": {
+        "address": "127.0.0.1:5892",
+        "chat": [
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]"
+        ],
+        "chunks": 161,
+        "dead_players": [],
+        "decode_errors": 0,
+        "dimension": "minecraft:overworld",
+        "entities": {
+          "minecraft:bat": 10,
+          "minecraft:chicken": 11,
+          "minecraft:cow": 8,
+          "minecraft:creeper": 15,
+          "minecraft:item": 2,
+          "minecraft:pig": 4,
+          "minecraft:sheep": 3,
+          "minecraft:skeleton": 18,
+          "minecraft:spider": 7,
+          "minecraft:squid": 8,
+          "minecraft:witch": 4,
+          "minecraft:zombie": 9,
+          "minecraft:zombie_villager": 2
+        },
+        "entity_id": 1850,
+        "food": 20,
+        "game_mode": 1,
+        "health": 20.0,
+        "joined": true,
+        "loaded": true,
+        "lying_players": [],
+        "name": "VfpSmoke",
+        "own_body": false,
+        "player_equipment": [],
+        "player_model": true,
+        "player_positions": [],
+        "players": [
+          "VfpSmoke"
+        ],
+        "status": "Loading terrain...",
+        "text_display_vertices": 0,
+        "text_displays": 0
+      },
+      "sidebar": null,
+      "sounds": {
+        "channels": 0,
+        "decoded": 0,
+        "decoded_mib": 0,
+        "events": [],
+        "handles": 0,
+        "instances": 0,
+        "playing": 0,
+        "queued": 0,
+        "ticking": 0,
+        "used": [
+          0,
+          0
+        ]
+      },
+      "stopped_sounds": {},
+      "streaming": {
+        "decorating": 0,
+        "finishing": 0,
+        "generating": 0,
+        "lighting": 0,
+        "meshing": 0,
+        "protos": 0,
+        "queued": 0
+      },
+      "target": null,
+      "ticks": 346,
+      "tridents": 0,
+      "uptime_seconds": 18.8076339,
+      "using": null,
+      "yaw": 0.0
+    },
+    {
+      "block_entities": 0,
+      "border": {
+        "center": [
+          0.0,
+          0.0
+        ],
+        "size": 59999968.0
+      },
+      "carts": [],
+      "chunks": 161,
+      "creative": true,
+      "day_time": 1216,
+      "debug": {
+        "advanced_tooltips": false,
+        "chunk_borders": false,
+        "clipboard": null,
+        "hitboxes": false,
+        "overlay": false,
+        "pause_menu": true,
+        "pause_on_lost_focus": true
+      },
+      "destroying": [],
+      "dimension": "minecraft:overworld",
+      "dirty_light": 0,
+      "display": {
+        "height": 1440,
+        "refresh_hz": 120,
+        "scale": 1.0,
+        "width": 2560
+      },
+      "fangs_vertices": 0,
+      "fight": {
+        "alive_crystals": 0,
+        "crystal_list": [],
+        "crystals": 0,
+        "dragon": null,
+        "exit_portal": null,
+        "killed": false,
+        "players": false,
+        "respawn": null
+      },
+      "fishing": null,
+      "fps": 18.455284118652344,
+      "frames": 1682,
+      "generated_chunks": 317,
+      "heard": {
+        "minecraft:entity.chicken.ambient": 1,
+        "minecraft:entity.chicken.step": 8,
+        "minecraft:entity.cow.ambient": 1,
+        "minecraft:entity.cow.step": 1,
+        "minecraft:entity.player.splash.high_speed": 2,
+        "minecraft:entity.sheep.ambient": 1,
+        "minecraft:entity.sheep.step": 2
+      },
+      "held": null,
+      "keys": [],
+      "lightning": {
+        "bolts": 0,
+        "flash": 0,
+        "flashes": 0,
+        "struck": 0
+      },
+      "lod": {
+        "active_tiles": 0,
+        "cached_tiles": 0,
+        "distance": 0,
+        "effective_distance": 0,
+        "far_detail": "full",
+        "pending_observations": 0,
+        "refined_samples": 0,
+        "resident_quads": 0,
+        "sampled_target_tiles": 0,
+        "source": "none",
+        "source_attempted": false,
+        "target_tiles": 0,
+        "terrain_distance": 6
+      },
+      "maps": [],
+      "meshed_sections": 6697,
+      "mobs": 88,
+      "music": null,
+      "name_tags": [],
+      "objects": [],
+      "offhand": null,
+      "particles": {
+        "bubble": 26,
+        "dragon_breath": 200,
+        "splash": 26,
+        "tinted_leaves": 57,
+        "underwater": 608
+      },
+      "pending_chunks": 0,
+      "pending_uploads": 0,
+      "physical_keys": [],
+      "pitch": 0.0,
+      "player": {
+        "food": 20,
+        "health": 20.0,
+        "max_health": null,
+        "on_ground": true,
+        "position": [
+          356.5,
+          62.0,
+          253.5
+        ],
+        "velocity": [
+          0.0,
+          -0.005,
+          0.0
+        ]
+      },
+      "projectiles": [],
+      "render_distance": 6,
+      "renderer": {
+        "arena_bytes": 100663296,
+        "backend": "Vulkan",
+        "culled_sections": [
+          [
+            25,
+            35
+          ],
+          0.14690738916397095
+        ],
+        "device_type": "discrete",
+        "drawn_sections": 96,
+        "driver": "NVIDIA 617.14",
+        "gpu": "NVIDIA GeForce RTX 2080",
+        "gpu_allocated_bytes": 326092352,
+        "gpu_reserved_bytes": 603979776,
+        "present_mode": "Immediate",
+        "resident_sections": 613,
+        "section_draw_calls": 3,
+        "section_draws": 218,
+        "section_vertex_bytes": 55967712,
+        "size": [
+          1280,
+          720
+        ],
+        "uploaded_bytes": 134448672,
+        "vendor": "nvidia"
+      },
+      "riding": null,
+      "rockets": 0,
+      "screen": "playing",
+      "selected": 1,
+      "server": {
+        "address": "127.0.0.1:5892",
+        "chat": [
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]"
+        ],
+        "chunks": 161,
+        "dead_players": [],
+        "decode_errors": 0,
+        "dimension": "minecraft:overworld",
+        "entities": {
+          "minecraft:bat": 11,
+          "minecraft:chicken": 16,
+          "minecraft:cow": 7,
+          "minecraft:creeper": 14,
+          "minecraft:pig": 4,
+          "minecraft:sheep": 8,
+          "minecraft:skeleton": 10,
+          "minecraft:spider": 3,
+          "minecraft:squid": 6,
+          "minecraft:zombie": 8,
+          "minecraft:zombie_villager": 1
+        },
+        "entity_id": 1850,
+        "food": 20,
+        "game_mode": 1,
+        "health": 20.0,
+        "joined": true,
+        "loaded": true,
+        "lying_players": [],
+        "name": "VfpSmoke",
+        "own_body": false,
+        "player_equipment": [],
+        "player_model": true,
+        "player_positions": [],
+        "players": [
+          "VfpSmoke"
+        ],
+        "status": "Loading terrain...",
+        "text_display_vertices": 0,
+        "text_displays": 0
+      },
+      "sidebar": null,
+      "sounds": {
+        "channels": 0,
+        "decoded": 0,
+        "decoded_mib": 0,
+        "events": [],
+        "handles": 0,
+        "instances": 0,
+        "playing": 0,
+        "queued": 0,
+        "ticking": 0,
+        "used": [
+          0,
+          0
+        ]
+      },
+      "stopped_sounds": {},
+      "streaming": {
+        "decorating": 0,
+        "finishing": 0,
+        "generating": 0,
+        "lighting": 0,
+        "meshing": 0,
+        "protos": 0,
+        "queued": 0
+      },
+      "target": null,
+      "ticks": 395,
+      "tridents": 0,
+      "uptime_seconds": 21.2375965,
+      "using": null,
+      "yaw": 0.0
+    },
+    {
+      "block_entities": 0,
+      "border": {
+        "center": [
+          0.0,
+          0.0
+        ],
+        "size": 59999968.0
+      },
+      "carts": [],
+      "chunks": 168,
+      "creative": true,
+      "day_time": 1263,
+      "debug": {
+        "advanced_tooltips": false,
+        "chunk_borders": false,
+        "clipboard": null,
+        "hitboxes": false,
+        "overlay": false,
+        "pause_menu": true,
+        "pause_on_lost_focus": true
+      },
+      "destroying": [],
+      "dimension": "minecraft:overworld",
+      "dirty_light": 0,
+      "display": {
+        "height": 1440,
+        "refresh_hz": 120,
+        "scale": 1.0,
+        "width": 2560
+      },
+      "fangs_vertices": 0,
+      "fight": {
+        "alive_crystals": 0,
+        "crystal_list": [],
+        "crystals": 0,
+        "dragon": null,
+        "exit_portal": null,
+        "killed": false,
+        "players": false,
+        "respawn": null
+      },
+      "fishing": null,
+      "fps": 7.846527576446533,
+      "frames": 1827,
+      "generated_chunks": 376,
+      "heard": {
+        "minecraft:entity.chicken.ambient": 1,
+        "minecraft:entity.chicken.step": 8,
+        "minecraft:entity.cow.ambient": 1,
+        "minecraft:entity.cow.step": 1,
+        "minecraft:entity.player.splash.high_speed": 2,
+        "minecraft:entity.sheep.ambient": 1,
+        "minecraft:entity.sheep.step": 2
+      },
+      "held": null,
+      "keys": [],
+      "lightning": {
+        "bolts": 0,
+        "flash": 0,
+        "flashes": 0,
+        "struck": 0
+      },
+      "lod": {
+        "active_tiles": 0,
+        "cached_tiles": 0,
+        "distance": 0,
+        "effective_distance": 0,
+        "far_detail": "full",
+        "pending_observations": 0,
+        "refined_samples": 0,
+        "resident_quads": 0,
+        "sampled_target_tiles": 0,
+        "source": "none",
+        "source_attempted": false,
+        "target_tiles": 0,
+        "terrain_distance": 6
+      },
+      "maps": [],
+      "meshed_sections": 8544,
+      "mobs": 120,
+      "music": null,
+      "name_tags": [],
+      "objects": [],
+      "offhand": null,
+      "particles": {
+        "bubble": 26,
+        "dragon_breath": 400,
+        "splash": 26,
+        "tinted_leaves": 67,
+        "underwater": 619
+      },
+      "pending_chunks": 0,
+      "pending_uploads": 0,
+      "physical_keys": [],
+      "pitch": 0.0,
+      "player": {
+        "food": 20,
+        "health": 20.0,
+        "max_health": null,
+        "on_ground": true,
+        "position": [
+          420.5,
+          83.0,
+          253.5
+        ],
+        "velocity": [
+          0.0,
+          -0.0784000015258789,
+          0.0
+        ]
+      },
+      "projectiles": [],
+      "render_distance": 6,
+      "renderer": {
+        "arena_bytes": 100663296,
+        "backend": "Vulkan",
+        "culled_sections": [
+          [
+            13,
+            71
+          ],
+          0.06648046523332596
+        ],
+        "device_type": "discrete",
+        "drawn_sections": 131,
+        "driver": "NVIDIA 617.14",
+        "gpu": "NVIDIA GeForce RTX 2080",
+        "gpu_allocated_bytes": 342869568,
+        "gpu_reserved_bytes": 603979776,
+        "present_mode": "Immediate",
+        "resident_sections": 734,
+        "section_draw_calls": 2,
+        "section_draws": 227,
+        "section_vertex_bytes": 80869728,
+        "size": [
+          1280,
+          720
+        ],
+        "uploaded_bytes": 230720544,
+        "vendor": "nvidia"
+      },
+      "riding": null,
+      "rockets": 0,
+      "screen": "playing",
+      "selected": 1,
+      "server": {
+        "address": "127.0.0.1:5892",
+        "chat": [
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]"
+        ],
+        "chunks": 168,
+        "dead_players": [],
+        "decode_errors": 0,
+        "dimension": "minecraft:overworld",
+        "entities": {
+          "minecraft:bat": 13,
+          "minecraft:chicken": 25,
+          "minecraft:cow": 16,
+          "minecraft:creeper": 12,
+          "minecraft:item": 4,
+          "minecraft:sheep": 20,
+          "minecraft:skeleton": 15,
+          "minecraft:spider": 4,
+          "minecraft:zombie": 15
+        },
+        "entity_id": 1850,
+        "food": 20,
+        "game_mode": 1,
+        "health": 20.0,
+        "joined": true,
+        "loaded": true,
+        "lying_players": [],
+        "name": "VfpSmoke",
+        "own_body": false,
+        "player_equipment": [],
+        "player_model": true,
+        "player_positions": [],
+        "players": [
+          "VfpSmoke"
+        ],
+        "status": "Loading terrain...",
+        "text_display_vertices": 0,
+        "text_displays": 0
+      },
+      "sidebar": null,
+      "sounds": {
+        "channels": 0,
+        "decoded": 0,
+        "decoded_mib": 0,
+        "events": [],
+        "handles": 0,
+        "instances": 0,
+        "playing": 0,
+        "queued": 0,
+        "ticking": 0,
+        "used": [
+          0,
+          0
+        ]
+      },
+      "stopped_sounds": {},
+      "streaming": {
+        "decorating": 0,
+        "finishing": 0,
+        "generating": 0,
+        "lighting": 0,
+        "meshing": 0,
+        "protos": 0,
+        "queued": 0
+      },
+      "target": null,
+      "ticks": 444,
+      "tridents": 0,
+      "uptime_seconds": 23.6844331,
+      "using": null,
+      "yaw": 0.0
+    },
+    {
+      "block_entities": 0,
+      "border": {
+        "center": [
+          0.0,
+          0.0
+        ],
+        "size": 59999968.0
+      },
+      "carts": [],
+      "chunks": 168,
+      "creative": true,
+      "day_time": 1317,
+      "debug": {
+        "advanced_tooltips": false,
+        "chunk_borders": false,
+        "clipboard": null,
+        "hitboxes": false,
+        "overlay": false,
+        "pause_menu": true,
+        "pause_on_lost_focus": true
+      },
+      "destroying": [],
+      "dimension": "minecraft:overworld",
+      "dirty_light": 0,
+      "display": {
+        "height": 1440,
+        "refresh_hz": 120,
+        "scale": 1.0,
+        "width": 2560
+      },
+      "fangs_vertices": 0,
+      "fight": {
+        "alive_crystals": 0,
+        "crystal_list": [],
+        "crystals": 0,
+        "dragon": null,
+        "exit_portal": null,
+        "killed": false,
+        "players": false,
+        "respawn": null
+      },
+      "fishing": null,
+      "fps": 15.903989791870115,
+      "frames": 2006,
+      "generated_chunks": 428,
+      "heard": {
+        "minecraft:entity.chicken.ambient": 1,
+        "minecraft:entity.chicken.step": 8,
+        "minecraft:entity.cow.ambient": 1,
+        "minecraft:entity.cow.step": 1,
+        "minecraft:entity.player.splash.high_speed": 2,
+        "minecraft:entity.sheep.ambient": 1,
+        "minecraft:entity.sheep.step": 2
+      },
+      "held": null,
+      "keys": [],
+      "lightning": {
+        "bolts": 0,
+        "flash": 0,
+        "flashes": 0,
+        "struck": 0
+      },
+      "lod": {
+        "active_tiles": 0,
+        "cached_tiles": 0,
+        "distance": 0,
+        "effective_distance": 0,
+        "far_detail": "full",
+        "pending_observations": 0,
+        "refined_samples": 0,
+        "resident_quads": 0,
+        "sampled_target_tiles": 0,
+        "source": "none",
+        "source_attempted": false,
+        "target_tiles": 0,
+        "terrain_distance": 6
+      },
+      "maps": [],
+      "meshed_sections": 10407,
+      "mobs": 116,
+      "music": null,
+      "name_tags": [],
+      "objects": [],
+      "offhand": null,
+      "particles": {
+        "bubble": 26,
+        "dragon_breath": 600,
+        "splash": 26,
+        "tinted_leaves": 78,
+        "underwater": 648
+      },
+      "pending_chunks": 0,
+      "pending_uploads": 0,
+      "physical_keys": [],
+      "pitch": 0.0,
+      "player": {
+        "food": 20,
+        "health": 20.0,
+        "max_health": null,
+        "on_ground": true,
+        "position": [
+          484.5,
+          86.0,
+          253.5
+        ],
+        "velocity": [
+          0.0,
+          -0.0784000015258789,
+          0.0
+        ]
+      },
+      "projectiles": [],
+      "render_distance": 6,
+      "renderer": {
+        "arena_bytes": 100663296,
+        "backend": "Vulkan",
+        "culled_sections": [
+          [
+            90,
+            92
+          ],
+          0.6811949014663696
+        ],
+        "device_type": "discrete",
+        "drawn_sections": 125,
+        "driver": "NVIDIA 617.14",
+        "gpu": "NVIDIA GeForce RTX 2080",
+        "gpu_allocated_bytes": 342869568,
+        "gpu_reserved_bytes": 603979776,
+        "present_mode": "Immediate",
+        "resident_sections": 753,
+        "section_draw_calls": 3,
+        "section_draws": 233,
+        "section_vertex_bytes": 95852736,
+        "size": [
+          1280,
+          720
+        ],
+        "uploaded_bytes": 339604608,
+        "vendor": "nvidia"
+      },
+      "riding": null,
+      "rockets": 0,
+      "screen": "playing",
+      "selected": 1,
+      "server": {
+        "address": "127.0.0.1:5892",
+        "chat": [
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]"
+        ],
+        "chunks": 168,
+        "dead_players": [],
+        "decode_errors": 0,
+        "dimension": "minecraft:overworld",
+        "entities": {
+          "minecraft:bat": 10,
+          "minecraft:chicken": 29,
+          "minecraft:cow": 16,
+          "minecraft:creeper": 12,
+          "minecraft:item": 7,
+          "minecraft:sheep": 16,
+          "minecraft:skeleton": 22,
+          "minecraft:spider": 3,
+          "minecraft:zombie": 8
+        },
+        "entity_id": 1850,
+        "food": 20,
+        "game_mode": 1,
+        "health": 20.0,
+        "joined": true,
+        "loaded": true,
+        "lying_players": [],
+        "name": "VfpSmoke",
+        "own_body": false,
+        "player_equipment": [],
+        "player_model": true,
+        "player_positions": [],
+        "players": [
+          "VfpSmoke"
+        ],
+        "status": "Loading terrain...",
+        "text_display_vertices": 0,
+        "text_displays": 0
+      },
+      "sidebar": null,
+      "sounds": {
+        "channels": 0,
+        "decoded": 0,
+        "decoded_mib": 0,
+        "events": [],
+        "handles": 0,
+        "instances": 0,
+        "playing": 0,
+        "queued": 0,
+        "ticking": 0,
+        "used": [
+          0,
+          0
+        ]
+      },
+      "stopped_sounds": {},
+      "streaming": {
+        "decorating": 0,
+        "finishing": 0,
+        "generating": 0,
+        "lighting": 0,
+        "meshing": 0,
+        "protos": 0,
+        "queued": 0
+      },
+      "target": {
+        "block": "minecraft:vine",
+        "pos": [
+          484,
+          87,
+          256
+        ]
+      },
+      "ticks": 496,
+      "tridents": 0,
+      "uptime_seconds": 26.3123688,
+      "using": null,
+      "yaw": 0.0
+    },
+    {
+      "block_entities": 0,
+      "border": {
+        "center": [
+          0.0,
+          0.0
+        ],
+        "size": 59999968.0
+      },
+      "carts": [],
+      "chunks": 163,
+      "creative": true,
+      "day_time": 1365,
+      "debug": {
+        "advanced_tooltips": false,
+        "chunk_borders": false,
+        "clipboard": null,
+        "hitboxes": false,
+        "overlay": false,
+        "pause_menu": true,
+        "pause_on_lost_focus": true
+      },
+      "destroying": [],
+      "dimension": "minecraft:overworld",
+      "dirty_light": 0,
+      "display": {
+        "height": 1440,
+        "refresh_hz": 120,
+        "scale": 1.0,
+        "width": 2560
+      },
+      "fangs_vertices": 0,
+      "fight": {
+        "alive_crystals": 0,
+        "crystal_list": [],
+        "crystals": 0,
+        "dragon": null,
+        "exit_portal": null,
+        "killed": false,
+        "players": false,
+        "respawn": null
+      },
+      "fishing": null,
+      "fps": 30.646150588989254,
+      "frames": 2154,
+      "generated_chunks": 475,
+      "heard": {
+        "minecraft:entity.chicken.ambient": 1,
+        "minecraft:entity.chicken.step": 8,
+        "minecraft:entity.cow.ambient": 1,
+        "minecraft:entity.cow.step": 1,
+        "minecraft:entity.player.splash.high_speed": 2,
+        "minecraft:entity.sheep.ambient": 1,
+        "minecraft:entity.sheep.step": 2
+      },
+      "held": null,
+      "keys": [],
+      "lightning": {
+        "bolts": 0,
+        "flash": 0,
+        "flashes": 0,
+        "struck": 0
+      },
+      "lod": {
+        "active_tiles": 0,
+        "cached_tiles": 0,
+        "distance": 0,
+        "effective_distance": 0,
+        "far_detail": "full",
+        "pending_observations": 0,
+        "refined_samples": 0,
+        "resident_quads": 0,
+        "sampled_target_tiles": 0,
+        "source": "none",
+        "source_attempted": false,
+        "target_tiles": 0,
+        "terrain_distance": 6
+      },
+      "maps": [],
+      "meshed_sections": 11714,
+      "mobs": 89,
+      "music": null,
+      "name_tags": [],
+      "objects": [],
+      "offhand": null,
+      "particles": {
+        "bubble": 26,
+        "dragon_breath": 800,
+        "splash": 26,
+        "tinted_leaves": 94,
+        "underwater": 648
+      },
+      "pending_chunks": 0,
+      "pending_uploads": 0,
+      "physical_keys": [],
+      "pitch": 0.0,
+      "player": {
+        "food": 20,
+        "health": 20.0,
+        "max_health": null,
+        "on_ground": true,
+        "position": [
+          548.5,
+          84.0,
+          253.5
+        ],
+        "velocity": [
+          0.0,
+          -0.0784000015258789,
+          0.0
+        ]
+      },
+      "projectiles": [
+        {
+          "id": 6422,
+          "kind": "minecraft:falling_block",
+          "position": [
+            626.5,
+            27.44367454906455,
+            204.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 6472,
+          "kind": "minecraft:falling_block",
+          "position": [
+            623.5,
+            30.035340702813205,
+            204.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 6500,
+          "kind": "minecraft:falling_block",
+          "position": [
+            623.5,
+            32.64561116230238,
+            204.5
+          ],
+          "state": 127
+        }
+      ],
+      "render_distance": 6,
+      "renderer": {
+        "arena_bytes": 100663296,
+        "backend": "Vulkan",
+        "culled_sections": [
+          [
+            7,
+            113
+          ],
+          0.0380411259829998
+        ],
+        "device_type": "discrete",
+        "drawn_sections": 113,
+        "driver": "NVIDIA 617.14",
+        "gpu": "NVIDIA GeForce RTX 2080",
+        "gpu_allocated_bytes": 342869568,
+        "gpu_reserved_bytes": 603979776,
+        "present_mode": "Immediate",
+        "resident_sections": 728,
+        "section_draw_calls": 2,
+        "section_draws": 233,
+        "section_vertex_bytes": 85286976,
+        "size": [
+          1280,
+          720
+        ],
+        "uploaded_bytes": 411564480,
+        "vendor": "nvidia"
+      },
+      "riding": null,
+      "rockets": 0,
+      "screen": "playing",
+      "selected": 1,
+      "server": {
+        "address": "127.0.0.1:5892",
+        "chat": [
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]"
+        ],
+        "chunks": 163,
+        "dead_players": [],
+        "decode_errors": 0,
+        "dimension": "minecraft:overworld",
+        "entities": {
+          "minecraft:bat": 5,
+          "minecraft:chicken": 24,
+          "minecraft:cow": 11,
+          "minecraft:creeper": 10,
+          "minecraft:falling_block": 3,
+          "minecraft:item": 4,
+          "minecraft:sheep": 14,
+          "minecraft:skeleton": 16,
+          "minecraft:spider": 1,
+          "minecraft:zombie": 8
+        },
+        "entity_id": 1850,
+        "food": 20,
+        "game_mode": 1,
+        "health": 20.0,
+        "joined": true,
+        "loaded": true,
+        "lying_players": [],
+        "name": "VfpSmoke",
+        "own_body": false,
+        "player_equipment": [],
+        "player_model": true,
+        "player_positions": [],
+        "players": [
+          "VfpSmoke"
+        ],
+        "status": "Loading terrain...",
+        "text_display_vertices": 0,
+        "text_displays": 0
+      },
+      "sidebar": null,
+      "sounds": {
+        "channels": 0,
+        "decoded": 0,
+        "decoded_mib": 0,
+        "events": [],
+        "handles": 0,
+        "instances": 0,
+        "playing": 0,
+        "queued": 0,
+        "ticking": 0,
+        "used": [
+          0,
+          0
+        ]
+      },
+      "stopped_sounds": {},
+      "streaming": {
+        "decorating": 0,
+        "finishing": 0,
+        "generating": 0,
+        "lighting": 0,
+        "meshing": 4,
+        "protos": 0,
+        "queued": 0
+      },
+      "target": null,
+      "ticks": 541,
+      "tridents": 0,
+      "uptime_seconds": 28.7221401,
+      "using": null,
+      "yaw": 0.0
+    },
+    {
+      "block_entities": 3,
+      "border": {
+        "center": [
+          0.0,
+          0.0
+        ],
+        "size": 59999968.0
+      },
+      "carts": [],
+      "chunks": 166,
+      "creative": true,
+      "day_time": 1414,
+      "debug": {
+        "advanced_tooltips": false,
+        "chunk_borders": false,
+        "clipboard": null,
+        "hitboxes": false,
+        "overlay": false,
+        "pause_menu": true,
+        "pause_on_lost_focus": true
+      },
+      "destroying": [],
+      "dimension": "minecraft:overworld",
+      "dirty_light": 0,
+      "display": {
+        "height": 1440,
+        "refresh_hz": 120,
+        "scale": 1.0,
+        "width": 2560
+      },
+      "fangs_vertices": 0,
+      "fight": {
+        "alive_crystals": 0,
+        "crystal_list": [],
+        "crystals": 0,
+        "dragon": null,
+        "exit_portal": null,
+        "killed": false,
+        "players": false,
+        "respawn": null
+      },
+      "fishing": null,
+      "fps": 19.205095291137695,
+      "frames": 2303,
+      "generated_chunks": 530,
+      "heard": {
+        "minecraft:entity.chicken.ambient": 1,
+        "minecraft:entity.chicken.step": 8,
+        "minecraft:entity.cow.ambient": 1,
+        "minecraft:entity.cow.step": 1,
+        "minecraft:entity.player.splash.high_speed": 2,
+        "minecraft:entity.sheep.ambient": 1,
+        "minecraft:entity.sheep.step": 2
+      },
+      "held": null,
+      "keys": [],
+      "lightning": {
+        "bolts": 0,
+        "flash": 0,
+        "flashes": 0,
+        "struck": 0
+      },
+      "lod": {
+        "active_tiles": 0,
+        "cached_tiles": 0,
+        "distance": 0,
+        "effective_distance": 0,
+        "far_detail": "full",
+        "pending_observations": 0,
+        "refined_samples": 0,
+        "resident_quads": 0,
+        "sampled_target_tiles": 0,
+        "source": "none",
+        "source_attempted": false,
+        "target_tiles": 0,
+        "terrain_distance": 6
+      },
+      "maps": [],
+      "meshed_sections": 13359,
+      "mobs": 71,
+      "music": null,
+      "name_tags": [],
+      "objects": [],
+      "offhand": null,
+      "particles": {
+        "bubble": 26,
+        "dragon_breath": 1000,
+        "splash": 26,
+        "tinted_leaves": 94,
+        "underwater": 658
+      },
+      "pending_chunks": 0,
+      "pending_uploads": 0,
+      "physical_keys": [],
+      "pitch": 0.0,
+      "player": {
+        "food": 20,
+        "health": 20.0,
+        "max_health": null,
+        "on_ground": true,
+        "position": [
+          612.5,
+          66.0,
+          253.5
+        ],
+        "velocity": [
+          0.0,
+          -0.0784000015258789,
+          0.0
+        ]
+      },
+      "projectiles": [
+        {
+          "id": 6750,
+          "kind": "minecraft:falling_block",
+          "position": [
+            677.5,
+            19.584349030528116,
+            232.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7025,
+          "kind": "minecraft:falling_block",
+          "position": [
+            683.5,
+            30.035340702813205,
+            237.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7026,
+          "kind": "minecraft:falling_block",
+          "position": [
+            680.5,
+            30.035340702813205,
+            235.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7027,
+          "kind": "minecraft:falling_block",
+          "position": [
+            679.5,
+            30.035340702813205,
+            234.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7030,
+          "kind": "minecraft:falling_block",
+          "position": [
+            678.5,
+            30.035340702813205,
+            233.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7077,
+          "kind": "minecraft:falling_block",
+          "position": [
+            692.5,
+            41.64561116230238,
+            294.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7078,
+          "kind": "minecraft:falling_block",
+          "position": [
+            692.5,
+            42.64561116230238,
+            295.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7079,
+          "kind": "minecraft:falling_block",
+          "position": [
+            692.5,
+            42.64561116230238,
+            296.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7086,
+          "kind": "minecraft:falling_block",
+          "position": [
+            686.5,
+            5.645740401635843,
+            278.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7087,
+          "kind": "minecraft:falling_block",
+          "position": [
+            685.5,
+            5.645740401635843,
+            277.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7088,
+          "kind": "minecraft:falling_block",
+          "position": [
+            686.5,
+            6.645740401635843,
+            277.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7089,
+          "kind": "minecraft:falling_block",
+          "position": [
+            687.5,
+            5.645740401635843,
+            278.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7090,
+          "kind": "minecraft:falling_block",
+          "position": [
+            687.5,
+            6.645740401635843,
+            277.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7091,
+          "kind": "minecraft:falling_block",
+          "position": [
+            685.5,
+            6.645740401635843,
+            276.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7092,
+          "kind": "minecraft:falling_block",
+          "position": [
+            686.5,
+            7.645740401635841,
+            276.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7112,
+          "kind": "minecraft:falling_block",
+          "position": [
+            686.5,
+            8.15734633461515,
+            278.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7113,
+          "kind": "minecraft:falling_block",
+          "position": [
+            685.5,
+            8.15734633461515,
+            277.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7114,
+          "kind": "minecraft:falling_block",
+          "position": [
+            686.5,
+            9.15734633461515,
+            277.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7115,
+          "kind": "minecraft:falling_block",
+          "position": [
+            687.5,
+            8.15734633461515,
+            278.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7116,
+          "kind": "minecraft:falling_block",
+          "position": [
+            685.5,
+            9.15734633461515,
+            276.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7119,
+          "kind": "minecraft:falling_block",
+          "position": [
+            686.5,
+            12.527489923166527,
+            278.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7120,
+          "kind": "minecraft:falling_block",
+          "position": [
+            685.5,
+            12.527489923166527,
+            277.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7121,
+          "kind": "minecraft:falling_block",
+          "position": [
+            687.5,
+            12.527489923166527,
+            278.5
+          ],
+          "state": 127
+        },
+        {
+          "id": 7122,
+          "kind": "minecraft:falling_block",
+          "position": [
+            685.5,
+            13.527489923166527,
+            276.5
+          ],
+          "state": 127
+        }
+      ],
+      "render_distance": 6,
+      "renderer": {
+        "arena_bytes": 100663296,
+        "backend": "Vulkan",
+        "culled_sections": [
+          [
+            0,
+            122
+          ],
+          0.0
+        ],
+        "device_type": "discrete",
+        "drawn_sections": 122,
+        "driver": "NVIDIA 617.14",
+        "gpu": "NVIDIA GeForce RTX 2080",
+        "gpu_allocated_bytes": 342869568,
+        "gpu_reserved_bytes": 603979776,
+        "present_mode": "Immediate",
+        "resident_sections": 768,
+        "section_draw_calls": 2,
+        "section_draws": 265,
+        "section_vertex_bytes": 68216064,
+        "size": [
+          1280,
+          720
+        ],
+        "uploaded_bytes": 472329504,
+        "vendor": "nvidia"
+      },
+      "riding": null,
+      "rockets": 0,
+      "screen": "playing",
+      "selected": 1,
+      "server": {
+        "address": "127.0.0.1:5892",
+        "chat": [
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]"
+        ],
+        "chunks": 166,
+        "dead_players": [],
+        "decode_errors": 0,
+        "dimension": "minecraft:overworld",
+        "entities": {
+          "minecraft:bat": 8,
+          "minecraft:chicken": 12,
+          "minecraft:cow": 4,
+          "minecraft:creeper": 6,
+          "minecraft:enderman": 1,
+          "minecraft:falling_block": 24,
+          "minecraft:item": 4,
+          "minecraft:pig": 8,
+          "minecraft:sheep": 4,
+          "minecraft:skeleton": 9,
+          "minecraft:spider": 2,
+          "minecraft:zombie": 17
+        },
+        "entity_id": 1850,
+        "food": 20,
+        "game_mode": 1,
+        "health": 20.0,
+        "joined": true,
+        "loaded": true,
+        "lying_players": [],
+        "name": "VfpSmoke",
+        "own_body": false,
+        "player_equipment": [],
+        "player_model": true,
+        "player_positions": [],
+        "players": [
+          "VfpSmoke"
+        ],
+        "status": "Loading terrain...",
+        "text_display_vertices": 0,
+        "text_displays": 0
+      },
+      "sidebar": null,
+      "sounds": {
+        "channels": 0,
+        "decoded": 0,
+        "decoded_mib": 0,
+        "events": [],
+        "handles": 0,
+        "instances": 0,
+        "playing": 0,
+        "queued": 0,
+        "ticking": 0,
+        "used": [
+          0,
+          0
+        ]
+      },
+      "stopped_sounds": {},
+      "streaming": {
+        "decorating": 0,
+        "finishing": 0,
+        "generating": 0,
+        "lighting": 0,
+        "meshing": 0,
+        "protos": 0,
+        "queued": 0
+      },
+      "target": null,
+      "ticks": 590,
+      "tridents": 0,
+      "uptime_seconds": 31.1370471,
+      "using": null,
+      "yaw": 0.0
+    },
+    {
+      "block_entities": 3,
+      "border": {
+        "center": [
+          0.0,
+          0.0
+        ],
+        "size": 59999968.0
+      },
+      "carts": [],
+      "chunks": 162,
+      "creative": true,
+      "day_time": 1462,
+      "debug": {
+        "advanced_tooltips": false,
+        "chunk_borders": false,
+        "clipboard": null,
+        "hitboxes": false,
+        "overlay": false,
+        "pause_menu": true,
+        "pause_on_lost_focus": true
+      },
+      "destroying": [],
+      "dimension": "minecraft:overworld",
+      "dirty_light": 0,
+      "display": {
+        "height": 1440,
+        "refresh_hz": 120,
+        "scale": 1.0,
+        "width": 2560
+      },
+      "fangs_vertices": 0,
+      "fight": {
+        "alive_crystals": 0,
+        "crystal_list": [],
+        "crystals": 0,
+        "dragon": null,
+        "exit_portal": null,
+        "killed": false,
+        "players": false,
+        "respawn": null
+      },
+      "fishing": null,
+      "fps": 108.10536193847656,
+      "frames": 2457,
+      "generated_chunks": 578,
+      "heard": {
+        "minecraft:entity.chicken.ambient": 1,
+        "minecraft:entity.chicken.step": 8,
+        "minecraft:entity.cow.ambient": 1,
+        "minecraft:entity.cow.step": 3,
+        "minecraft:entity.pig.step": 4,
+        "minecraft:entity.player.splash.high_speed": 2,
+        "minecraft:entity.sheep.ambient": 1,
+        "minecraft:entity.sheep.step": 2
+      },
+      "held": null,
+      "keys": [],
+      "lightning": {
+        "bolts": 0,
+        "flash": 0,
+        "flashes": 0,
+        "struck": 0
+      },
+      "lod": {
+        "active_tiles": 0,
+        "cached_tiles": 0,
+        "distance": 0,
+        "effective_distance": 0,
+        "far_detail": "full",
+        "pending_observations": 0,
+        "refined_samples": 0,
+        "resident_quads": 0,
+        "sampled_target_tiles": 0,
+        "source": "none",
+        "source_attempted": false,
+        "target_tiles": 0,
+        "terrain_distance": 6
+      },
+      "maps": [],
+      "meshed_sections": 14377,
+      "mobs": 79,
+      "music": null,
+      "name_tags": [],
+      "objects": [],
+      "offhand": null,
+      "particles": {
+        "bubble": 26,
+        "dragon_breath": 1000,
+        "splash": 26,
+        "tinted_leaves": 94,
+        "underwater": 659
+      },
+      "pending_chunks": 0,
+      "pending_uploads": 0,
+      "physical_keys": [],
+      "pitch": 0.0,
+      "player": {
+        "food": 20,
+        "health": 20.0,
+        "max_health": null,
+        "on_ground": true,
+        "position": [
+          676.5,
+          90.0,
+          253.5
+        ],
+        "velocity": [
+          0.0,
+          -0.0784000015258789,
+          0.0
+        ]
+      },
+      "projectiles": [],
+      "render_distance": 6,
+      "renderer": {
+        "arena_bytes": 100663296,
+        "backend": "Vulkan",
+        "culled_sections": [
+          [
+            32,
+            47
+          ],
+          0.18963222205638883
+        ],
+        "device_type": "discrete",
+        "drawn_sections": 139,
+        "driver": "NVIDIA 617.14",
+        "gpu": "NVIDIA GeForce RTX 2080",
+        "gpu_allocated_bytes": 342873152,
+        "gpu_reserved_bytes": 603979776,
+        "present_mode": "Immediate",
+        "resident_sections": 730,
+        "section_draw_calls": 3,
+        "section_draws": 227,
+        "section_vertex_bytes": 44377344,
+        "size": [
+          1280,
+          720
+        ],
+        "uploaded_bytes": 485805888,
+        "vendor": "nvidia"
+      },
+      "riding": null,
+      "rockets": 0,
+      "screen": "playing",
+      "selected": 1,
+      "server": {
+        "address": "127.0.0.1:5892",
+        "chat": [
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]",
+          "[Server: commands.tp.success.coordinates]"
+        ],
+        "chunks": 162,
+        "dead_players": [],
+        "decode_errors": 0,
+        "dimension": "minecraft:overworld",
+        "entities": {
+          "minecraft:bat": 10,
+          "minecraft:chicken": 4,
+          "minecraft:cow": 12,
+          "minecraft:creeper": 6,
+          "minecraft:enderman": 1,
+          "minecraft:item": 1,
+          "minecraft:pig": 8,
+          "minecraft:sheep": 8,
+          "minecraft:skeleton": 11,
+          "minecraft:spider": 1,
+          "minecraft:zombie": 18
+        },
+        "entity_id": 1850,
+        "food": 20,
+        "game_mode": 1,
+        "health": 20.0,
+        "joined": true,
+        "loaded": true,
+        "lying_players": [],
+        "name": "VfpSmoke",
+        "own_body": false,
+        "player_equipment": [],
+        "player_model": true,
+        "player_positions": [],
+        "players": [
+          "VfpSmoke"
+        ],
+        "status": "Loading terrain...",
+        "text_display_vertices": 0,
+        "text_displays": 0
+      },
+      "sidebar": null,
+      "sounds": {
+        "channels": 0,
+        "decoded": 0,
+        "decoded_mib": 0,
+        "events": [],
+        "handles": 0,
+        "instances": 0,
+        "playing": 0,
+        "queued": 0,
+        "ticking": 0,
+        "used": [
+          0,
+          0
+        ]
+      },
+      "stopped_sounds": {},
+      "streaming": {
+        "decorating": 0,
+        "finishing": 0,
+        "generating": 0,
+        "lighting": 0,
+        "meshing": 0,
+        "protos": 0,
+        "queued": 0
+      },
+      "target": {
+        "block": "minecraft:stone",
+        "pos": [
+          676,
+          91,
+          253
+        ]
+      },
+      "ticks": 637,
+      "tridents": 0,
+      "uptime_seconds": 33.5700755,
+      "using": null,
+      "yaw": 0.0
+    }
+  ],
+  "distance": 6,
+  "steps": 8,
+  "step_blocks": 64
+}
