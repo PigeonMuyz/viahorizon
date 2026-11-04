@@ -35,8 +35,8 @@ python tools/native.py build --horizon PATH_TO_HORIZON --mixins PATH_TO_MIXINS_E
 python tools/native.py package
 ```
 
-The package is written to `dist/`. See the [publishing guide](docs/publishing/README.md)
-for registry checks and submission steps.
+The package and checksum are written to `dist/`. See the
+[publishing guide](docs/publishing/README.md) for release checks and uploads.
 
 ## License
 

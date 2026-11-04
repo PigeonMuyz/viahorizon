@@ -1,58 +1,43 @@
-# Publishing ViaHorizon to Horizon
+# Publishing ViaHorizon
 
-This file records the registry-specific workflow
-from [Horizon's guide](https://playhorizon.dev/docs/publish-a-mod).
+## Validate and package
 
-## Build and prepare
-
-Use Python 3.11+, Rust 1.95+ (validated with 1.99.1 GNU on Windows), Git and a C
-toolchain. Build horizon-mixins at the revision in `compatibility.json` and use
-its executable below. The mod hooks internal networking functions, so the
-package deliberately has no `hooks` compatibility claim.
+Use Python 3.11+, Rust 1.99.1, Git and a C toolchain. Build horizon-mixins at
+the revision in `compatibility.json` and use its executable below. Internal
+networking hooks require exact Horizon and horizon-mixins compatibility pins.
 
 ```powershell
-python tools/native.py check --horizon latest --mixins PATH_TO_PINNED_MIXINS_EXE
+python tools/native.py check --horizon PATH_TO_PINNED_HORIZON --mixins PATH_TO_PINNED_MIXINS_EXE
 cargo test --locked
 cargo clippy --locked --all-targets -- -D warnings
 python tools/transport-proof.py
-cargo install --git https://github.com/horizon-rust/horizon --rev 6475f62f3c834b7489e1816bf47f47ea5eb2b879 --locked cargo-horizon-mod
-python tools/prepare-publish.py --checker PATH_TO_CARGO_HORIZON_MOD_EXE
+python tools/native.py package
 ```
 
-`--horizon latest` resolves the released Nightly and refuses a different commit
-from our compatibility pin. Audit upstream changes, update both manifests and
-rerun the check before publishing a new compatibility pin. It never silently
-claims compatibility with untested revisions.
+For an additional package check, install Horizon's checker and run it directly:
 
-`prepare-publish.py` requires a current native-check receipt, packages twice and
-compares the bytes, runs `cargo horizon-mod check`, checks the registry entry,
-and builds the index it would produce. The `.hnmod` carries Rust/TOML sources,
-GPL license text and third-party notices. The package is unsigned; signing is
-optional and no registry signing key has been configured.
+```powershell
+cargo install --git https://github.com/horizon-rust/horizon --rev 6475f62f3c834b7489e1816bf47f47ea5eb2b879 --locked cargo-horizon-mod
+cargo horizon-mod check dist/viahorizon-0.8.6-dev.hnmod --kind native-mod --json
+```
 
-## Submit for review
+The `.hnmod` carries Rust/TOML sources, GPL license text and third-party notices.
+No game assets or executables are bundled.
 
-Generated files are under `dist/`:
+## GitHub release
 
-- `viahorizon-0.8.6-dev.hnmod` and its `.sha256` file: package and checksum.
-- `publishing/submission.json`: page and version fields for the submission form.
-- `publishing/viahorizon.toml`: complete candidate registry entry.
-- `publishing/package-check.json`, `readiness.json`, and `index-preview.json`:
-  checker results and the index preview.
+Update the version in `Cargo.toml`, `Cargo.lock`, `mixins/viahorizon/core.rs`
+and `mixins/viahorizon/horizon-mixin.toml`, plus the current package filenames
+in the documentation. Record changes and validation in `docs/releases/`.
 
-Open [the submission form](https://playhorizon.dev/mods/submit), sign in with
-GitHub and select **Native mod**. Upload the `.hnmod`, and use the values in
-`submission.json`. The display name is **ViaHorizon**; the manifest and registry
-ID is **viahorizon**. Settings from earlier installations migrate automatically.
-Owner/author: `hhhhsffd`. License: `GPL-3.0-or-later`. Source:
-<https://github.com/hhhhsffd/viahorizon>. No icon or signature is required.
+Commit and push the source, then create a GitHub release at that commit. Attach
+the versioned `.hnmod` and its `.hnmod.sha256` file from `dist/`. Mark development
+versions as prereleases. Download the uploaded package and verify its checksum.
+Published version contents must never be replaced; bump the version for changes.
 
-The form submits to `horizon-rust/horizon-mods` for a maintainer to review.
-Preparing this bundle does not submit it or make a registry listing live.
-Every native version requires review, and a published package must never be
-replaced: change the version before changing its contents.
+## Horizon registry
 
-The port credits [ViaFabricPlus](https://github.com/ViaVersion/ViaFabricPlus)
-and other upstream authors in `THIRD_PARTY_NOTICES.md`. Public test keys under
-`tests/data/` are deliberately generated fixtures, and do not go in the package.
-Player data, tokens, logs, Minecraft files and executables are excluded.
+Registry submissions are separate from GitHub releases. Follow
+[Horizon's publishing guide](https://playhorizon.dev/docs/publish-a-mod) and
+provide listing details directly in the submission form. Each native version
+requires maintainer review.
