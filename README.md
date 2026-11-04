@@ -15,12 +15,6 @@ python -m zipfile -e .\viahorizon-0.8.6-dev.hnmod .\viahorizon-0.8.6-dev
 horizon-launcher native-build .\viahorizon-0.8.6-dev --trust-native-code
 ```
 
-Start the **Native mods** instance through Horizon Launcher. In Options > Mods,
-turn **ViaHorizon ON** and leave **Configuration preview OFF**. New settings
-default to **Auto**; you can also choose a specific server version. Existing
-saved targets are preserved when rebuilding or upgrading. Replace the previous
-mod package and rebuild the instance when upgrading.
-
 ## Build
 
 Use Python 3.11+, Git, Rust 1.99.1 and a C toolchain. Clone Horizon and
