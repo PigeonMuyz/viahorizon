@@ -1,0 +1,94 @@
+{
+  "version": "0.8.7-dev",
+  "horizon": "6475f62f3c834b7489e1816bf47f47ea5eb2b879",
+  "bundle_sha256": "541151157736805885eed74c554d0ad84f7095a9598c7615307f927f17d000bc",
+  "standalone_tests": 47,
+  "host_protocol_tests": 304,
+  "render_authentication_tests": 2,
+  "total_automated_tests": 353,
+  "standalone_clippy": "passed with warnings denied",
+  "protocol_clippy": "passed with warnings denied",
+  "native_client_check": "passed",
+  "package_check": {
+    "ok": true,
+    "report": {
+      "api": "native-1/6475f62f3c834b7489e1816bf47f47ea5eb2b879/3f99a5c60dfa311cc365524c44ae2fd799bfa1de",
+      "api_level": null,
+      "capabilities": [],
+      "game": "26.3",
+      "id": "viahorizon",
+      "kind": "native-mod",
+      "requires": [],
+      "sha256": "2eb3f53e0193cc92d7786f32e83fed536500398f6cafabf994e959f997b2d948",
+      "side": null,
+      "signed": false,
+      "size": 887439,
+      "version": "0.8.7-dev"
+    }
+  },
+  "package_reproducible": true,
+  "native_build": {
+    "profile": "fast",
+    "horizon": "6475f62f3c834b7489e1816bf47f47ea5eb2b879",
+    "bundle_sha256": "541151157736805885eed74c554d0ad84f7095a9598c7615307f927f17d000bc",
+    "binaries": [
+      {
+        "file": "horizon-client.exe",
+        "sha256": "b7c540aebf77294adc11126f862a331ce37ee210721071037a6967cf9e87b81c"
+      },
+      {
+        "file": "horizon-ctl.exe",
+        "sha256": "4fc400a4c224f5351f9f5be3e831c81fd033d2eb6a02b7ce0cdf2bddcb4aad53"
+      }
+    ]
+  },
+  "gameplay": {
+    "1.7.2": {
+      "checks": {
+        "player_spawned": true,
+        "chunks_and_native_decoders": true,
+        "movement": true,
+        "chat": true,
+        "repeated_air_right_clicks": true,
+        "placement_kept_before_server_reply": true,
+        "authoritative_placement_correction": true,
+        "block_placement_and_breaking": true,
+        "legacy_boundary_meshes_finish": true,
+        "crafting_table_output_visible": true,
+        "sword_use_remains_active_until_released": true,
+        "jump_and_land_on_legacy_bed": true,
+        "unsupported_new_items_cannot_be_equipped_or_sent": true,
+        "explosion_preserves_skylight": true,
+        "entity_spawn_and_combat": true,
+        "death_and_respawn": true,
+        "nether_portal": true,
+        "reconnect": true,
+        "inventory_clicks": true,
+        "crafting": true,
+        "container_transfer": true
+      },
+      "decode_errors": 0,
+      "processes_stopped": true
+    },
+    "1.19.2": {
+      "auto": true,
+      "checks": {
+        "player_spawned": true,
+        "chunks_and_native_decoders": true,
+        "movement": true,
+        "chat": true,
+        "block_placement_and_breaking": true,
+        "inventory_clicks": true,
+        "crafting": true,
+        "container_transfer": true,
+        "entity_spawn_and_combat": true,
+        "death_and_respawn": true,
+        "dimension_changes": true,
+        "reconnect": true
+      },
+      "decode_errors": 0,
+      "processes_stopped": true
+    }
+  },
+  "authentication_scope": "Synthetic local HTTP fixture verifies transient-failure retries and immediate rejection of invalid sessions. Real public server authentication depends on the session service and server."
+}

@@ -1291,3 +1291,58 @@ fn serverbound_menu_actions_keep_their_payload_and_validate_boundaries() {
         assert!(items::serverbound_262(id, &bad).is_err());
     }
 }
+
+#[test]
+fn old_servers_reject_new_items_but_keep_items_that_existed_at_each_boundary() {
+    use horizon_protocol::{
+        vfp_mapping::{Maps, V1193},
+        vfp_release_chain as chain, vfp_tables_1193,
+    };
+    let native = |name| {
+        V1193::ITEMS
+            .map(
+                vfp_tables_1193::ITEM_IDENTIFIERS
+                    .iter()
+                    .position(|v| *v == name)
+                    .unwrap() as i32,
+            )
+            .unwrap()
+    };
+    for (name, introduced) in [
+        ("stone", 4),
+        ("diamond_sword", 4),
+        ("slime_block", 47),
+        ("elytra", 107),
+        ("shield", 107),
+        ("chorus_fruit", 107),
+        ("dark_oak_door", 47),
+        ("magma_block", 210),
+        ("observer", 315),
+        ("iron_nugget", 316),
+        ("white_concrete", 335),
+        ("rabbit_spawn_egg", 47),
+        ("shulker_spawn_egg", 107),
+        ("parrot_spawn_egg", 335),
+        ("turtle_helmet", 393),
+        ("netherite_sword", 735),
+    ] {
+        let id = native(name);
+        for protocol in [
+            4, 5, 47, 107, 210, 315, 316, 335, 340, 393, 578, 735, 754, 760, 761, 777,
+        ] {
+            assert_eq!(
+                chain::native_item_supported(protocol, id),
+                protocol >= introduced,
+                "{name}, {protocol}"
+            );
+        }
+    }
+    for protocol in [4, 5, 47, 761, 777] {
+        assert!(!chain::native_item_supported(protocol, -1));
+        assert!(!chain::native_item_supported(
+            protocol,
+            t::ITEMS.mapped_size
+        ));
+    }
+    assert!(!chain::native_item_supported(3, native("stone")));
+}

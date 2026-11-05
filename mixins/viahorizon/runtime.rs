@@ -61,6 +61,13 @@ pub(super) fn sync(game: &mut Game<'_>) {
     if !game.native_window() {
         return;
     }
+    horizon_client::net::vfp_capture_session::activate(game.remote.as_ref().map(|r| &r.session));
+    horizon_client_render::vfp_render_compat::set_legacy(game.remote.as_ref().is_some_and(|r| {
+        matches!(
+            horizon_client::net::vfp_capture_session::protocol(&r.session),
+            Some(4 | 5 | 47)
+        )
+    }));
     UI.with(|cell| {
         let mut ui = cell.borrow_mut();
         if !ui.loaded {
@@ -157,7 +164,11 @@ fn start_probe(ui: &mut Ui, address: String) {
 }
 pub(super) fn command(game: &mut Game<'_>, command: &str) -> bool {
     let mut words = command.split_whitespace();
-    if !matches!(words.next(), Some("vh" | "viahorizon" | "vfp" | "viafabricplus")) || !game.native_on(core::ID) {
+    if !matches!(
+        words.next(),
+        Some("vh" | "viahorizon" | "vfp" | "viafabricplus")
+    ) || !game.native_on(core::ID)
+    {
         return false;
     }
     sync(game);

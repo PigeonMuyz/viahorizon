@@ -1,6 +1,6 @@
 [mod]
 id = "viahorizon"
-version = "0.8.6-dev"
+version = "0.8.7-dev"
 priority = 100
 
 [[module]]
@@ -931,4 +931,120 @@ bindings = [
   { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
   { name = "command", ty = "&str", value = "command" },
   { name = "ran", ty = "&mut bool", value = "&mut *ran" },
+]
+
+[[injection]]
+id = "legacy_sword_duration"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::Game<'_>::native_use_duration"
+helper = "legacy_sword_duration.rs"
+bindings = [
+ { name = "game", ty = "&crate::game::Game<'_>", value = "&*self" },
+ { name = "stack", ty = "&horizon_client::items::ItemStack", value = "stack" },
+ { name = "duration", ty = "&mut i32", value = "&mut *duration" },
+]
+
+[[injection]]
+id = "legacy_sword_animation"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::Game<'_>::native_use_animation"
+helper = "legacy_sword_animation.rs"
+bindings = [
+ { name = "game", ty = "&crate::game::Game<'_>", value = "&*self" },
+ { name = "stack", ty = "&horizon_client::items::ItemStack", value = "stack" },
+ { name = "animation", ty = "&mut horizon_world::consumable::UseAnimation", value = "&mut *animation" },
+]
+
+[[module]]
+id = "item_support"
+file = "crates/horizon-client/src/game/remote.rs"
+name = "vfp_item_support"
+source = "item_support.rs"
+visibility = "pub(crate)"
+
+[[injection]]
+id = "unsupported_creative_slots"
+kind = "HEAD"
+target = "horizon_client::game::remote::Game<'_>::send_creative_slots"
+helper = "unsupported_items.rs"
+bindings = [{ name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" }]
+
+[[injection]]
+id = "unsupported_creative_tick"
+kind = "HEAD"
+target = "horizon_client::game::remote::Game<'_>::remote_send_state"
+helper = "unsupported_items.rs"
+bindings = [{ name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" }]
+
+[[injection]]
+id = "unsupported_use"
+kind = "HEAD"
+cancellable = true
+target = "horizon_client::game::remote::Game<'_>::remote_use_item"
+helper = "unsupported_use.rs"
+bindings = [
+ { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+ { name = "hand", ty = "horizon_client::first_person::Hand", value = "hand" },
+]
+
+[[injection]]
+id = "unsupported_block_use"
+kind = "HEAD"
+cancellable = true
+target = "horizon_client::game::remote::Game<'_>::remote_use_item_on"
+helper = "unsupported_use.rs"
+bindings = [
+ { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+ { name = "hand", ty = "horizon_client::first_person::Hand", value = "hand" },
+]
+
+[[injection]]
+id = "legacy_bed_bounce"
+kind = "HEAD"
+cancellable = true
+target = "horizon_client_lib::motion::<MotionWorld<'_,'_,'_> as RestitutionWorld>::block_bounce_restitution"
+helper = "legacy_bed_bounce.rs"
+bindings = [
+ { name = "world", ty = "&crate::motion::MotionWorld<'_, '_, '_>", value = "&*self" },
+ { name = "state", ty = "horizon_world::registry::BlockStateId", value = "state" },
+]
+
+[[injection]]
+id = "auth_retry"
+kind = "HEAD"
+cancellable = true
+target = "horizon_client_render::auth::join_server"
+helper = "auth_retry.rs"
+bindings = [
+ { name = "session", ty = "&crate::auth::AuthSession", value = "session" },
+ { name = "server_hash", ty = "&str", value = "server_hash" },
+]
+
+[[module]]
+id = "render_compat"
+file = "crates/horizon-client-render/src/lib.rs"
+name = "vfp_render_compat"
+source = "render_compat.rs"
+visibility = "pub"
+
+[[injection]]
+id = "legacy_mesh_boundary"
+kind = "HEAD"
+target = "horizon_client_render::streaming::Streaming::update"
+helper = "legacy_mesh_boundary.rs"
+bindings = [
+ { name = "streaming", ty = "&mut crate::streaming::Streaming", value = "&mut *self" },
+ { name = "world", ty = "&crate::world::World", value = "&*world" },
+]
+
+[[injection]]
+id = "legacy_mesh_region"
+kind = "HEAD"
+cancellable = true
+target = "horizon_client_render::streaming::Streaming::region"
+helper = "legacy_mesh_region.rs"
+bindings = [
+ { name = "world", ty = "&crate::world::World", value = "world" },
+ { name = "x", ty = "i32", value = "x" },
+ { name = "z", ty = "i32", value = "z" },
 ]

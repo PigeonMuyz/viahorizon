@@ -25,6 +25,6 @@ fn inject(
         yaw: game.yaw,
         pitch: game.pitch,
     }));
-    game.using = Some((game.selected, 0));
+    game.start_using_item();
     ::core::ops::ControlFlow::Break(true)
 }

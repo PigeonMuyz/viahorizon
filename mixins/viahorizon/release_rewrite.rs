@@ -358,23 +358,19 @@ pub fn recipes(step: &Step, data: &[u8], add_category: bool) -> Result<Vec<u8>> 
                 ingredient(step, false, &mut r, &mut w)?;
                 item(step, false, &mut r, &mut w)?;
             }
-            kind if matches!(
-                kind,
-                "crafting_special_armordye"
-                    | "crafting_special_bookcloning"
-                    | "crafting_special_mapcloning"
-                    | "crafting_special_mapextending"
-                    | "crafting_special_firework_rocket"
-                    | "crafting_special_firework_star"
-                    | "crafting_special_firework_star_fade"
-                    | "crafting_special_tippedarrow"
-                    | "crafting_special_bannerduplicate"
-                    | "crafting_special_shielddecoration"
-                    | "crafting_special_shulkerboxcoloring"
-                    | "crafting_special_suspiciousstew"
-                    | "crafting_special_repairitem"
-            ) =>
-            {
+            "crafting_special_armordye"
+            | "crafting_special_bookcloning"
+            | "crafting_special_mapcloning"
+            | "crafting_special_mapextending"
+            | "crafting_special_firework_rocket"
+            | "crafting_special_firework_star"
+            | "crafting_special_firework_star_fade"
+            | "crafting_special_tippedarrow"
+            | "crafting_special_bannerduplicate"
+            | "crafting_special_shielddecoration"
+            | "crafting_special_shulkerboxcoloring"
+            | "crafting_special_suspiciousstew"
+            | "crafting_special_repairitem" => {
                 if add_category {
                     w.varint(0);
                 }

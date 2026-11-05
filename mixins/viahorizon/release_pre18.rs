@@ -73,6 +73,72 @@ impl State {
             let mut r = Reader::new(data);
             self.columns.forget(r.i32()?, r.i32()?);
         }
+        // A later partial column must include edits received since its full snapshot.
+        if step.target == 755 {
+            let mut updates = Vec::new();
+            let mut r = Reader::new(data);
+            match name {
+                "BLOCK_UPDATE" => {
+                    let position =
+                        crate::vfp_release_codec::Position::unpack(r.i64()?, step.source);
+                    let state = step.same_or_map("blockstates", r.varint()?, false)?;
+                    codec::end(&r)?;
+                    updates.push((position, state));
+                }
+                "SECTION_BLOCKS_UPDATE" => {
+                    let key = r.i64()?;
+                    codec::boolean(&mut r)?;
+                    let sx = (key >> 42) as i32;
+                    let sz = ((key << 22) >> 42) as i32;
+                    let sy = ((key << 44) >> 44) as i32;
+                    for _ in 0..r.count(65536)? {
+                        let value = r.varlong()?;
+                        if value < 0 {
+                            return Err(Error::new("Negative cached section update"));
+                        }
+                        let state = step.same_or_map(
+                            "blockstates",
+                            i32::try_from(value >> 12)
+                                .map_err(|_| Error::new("Cached state overflow"))?,
+                            false,
+                        )?;
+                        updates.push((
+                            crate::vfp_release_codec::Position {
+                                x: sx.wrapping_mul(16).wrapping_add(((value >> 8) & 15) as i32),
+                                y: sy.wrapping_mul(16).wrapping_add((value & 15) as i32),
+                                z: sz.wrapping_mul(16).wrapping_add(((value >> 4) & 15) as i32),
+                            },
+                            state,
+                        ));
+                    }
+                    codec::end(&r)?;
+                }
+                "EXPLODE" => {
+                    let origin = [r.f32()? as i32, r.f32()? as i32, r.f32()? as i32];
+                    r.f32()?;
+                    let count = r.i32()?;
+                    if !(0..=65536).contains(&count) {
+                        return Err(Error::new("Invalid cached explosion size"));
+                    }
+                    for _ in 0..count {
+                        updates.push((
+                            crate::vfp_release_codec::Position {
+                                x: origin[0].wrapping_add(i32::from(r.i8()?)),
+                                y: origin[1].wrapping_add(i32::from(r.i8()?)),
+                                z: origin[2].wrapping_add(i32::from(r.i8()?)),
+                            },
+                            0,
+                        ));
+                    }
+                    r.bytes(12)?;
+                    codec::end(&r)?;
+                }
+                _ => (),
+            }
+            for (position, state) in updates {
+                self.columns.set_block(position, state);
+            }
+        }
         if name == "LEVEL_CHUNK" {
             let mut column =
                 crate::vfp_release_columns::Column::read(step, data, self.dimension == 0)?;

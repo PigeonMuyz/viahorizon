@@ -216,6 +216,7 @@ def main():
     parser.add_argument('--auto',action='store_true',help='Test status-based target selection without the transcript proxy')
     parser.add_argument('--interaction-regression',action='store_true',
                         help='Check early-release air use and placement before the server receives the click')
+    parser.add_argument('--legacy-regressions',action='store_true',help='Check 1.7 beds, crafting output, sword use, explosion light and unsupported items')
     parser.add_argument('--streaming-profile',action='store_true',
                         help='Measure idle and repeated new-chunk frame times in an isolated world')
     parser.add_argument('--profile-origin',nargs=3,type=float,metavar=('X','Y','Z'),
@@ -598,6 +599,85 @@ def main():
                 authoritative('execute if entity @a[name=VfpSmoke,nbt={Inventory:[{id:"minecraft:diamond"}]}]',
                               'vfp_chest_transfer')
                 report['checks']['container_transfer']=True
+            if args.legacy_regressions:
+                assert protocol in (4,5), '--legacy-regressions requires 1.7'
+                ctl('render-distance','8')
+                boundary=wait_value('Legacy boundary meshes finish',lambda:ctl('status'),
+                    lambda value:value['chunks']>=81 and value['pending_chunks']==0 and value['streaming']['meshing']==0
+                                 and value.get('renderer',{}).get('resident_sections',0)>=value['chunks'],
+                    seconds=60)
+                (run/'chunk-boundary-status.json').write_text(json.dumps(boundary,indent=2),encoding='utf-8')
+                report['checks']['legacy_boundary_meshes_finish']=True
+                ctl('render-distance','2')
+                # Exercise the real 3x3 menu after the ordinary 2x2 crafting check.
+                supply('oak_planks',2)
+                inv=wait_value('Table ingredients',lambda:ctl('inventory'),
+                               lambda inv:inv.get('counts',{}).get('minecraft:oak_planks',0)>=2)
+                planks=next(item for item in inv['hotbar'] if item.get('item')=='minecraft:oak_planks')
+                console(f'setblock {x} {y} {z} minecraft:crafting_table')
+                wait_value('Crafting table block',lambda:ctl('block',str(x),str(y),str(z)),
+                           lambda b:b.get('block')=='minecraft:crafting_table')
+                ctl('interact',str(x),str(y),str(z))
+                wait_value('3x3 crafting menu',lambda:ctl('screen'),lambda screen:screen.get('craft_size')==3)
+                ctl('click-slot',str(planks['slot']))
+                ctl('click-slot','100','right');ctl('click-slot','103','right')
+                output=wait_value('Table output visible',lambda:ctl('screen'),
+                    lambda screen:any(item.get('slot')==200 and item.get('item')=='minecraft:stick'
+                                      for item in screen.get('slots',[])))
+                (run/'crafting-table-output.json').write_text(json.dumps(output,indent=2),encoding='utf-8')
+                ctl('click-slot','200');ctl('click-slot',str(planks['slot']));ctl('close')
+                report['checks']['crafting_table_output_visible']=True
+                supply('diamond_sword',1)
+                wait_value('Sword inventory',lambda:ctl('inventory'),
+                           lambda inv:inv.get('counts',{}).get('minecraft:diamond_sword',0)>0)
+                ctl('select','minecraft:diamond_sword');ctl('look','0','-89')
+                ctl('mouse','right','down')
+                try:
+                    samples=[]
+                    for _ in range(5):
+                        time.sleep(.25);samples.append(ctl('state'))
+                    assert all(sample.get('using') for sample in samples),samples
+                    assert samples[-1]['using']['ticks']>samples[0]['using']['ticks'],samples
+                    (run/'sword-use.json').write_text(json.dumps(samples,indent=2),encoding='utf-8')
+                finally: ctl('mouse','right','up')
+                wait_value('Sword release',lambda:ctl('state'),lambda state:state.get('using') is None)
+                report['checks']['sword_use_remains_active_until_released']=True
+                # Old beds stop downward velocity instead of the modern automatic bounce.
+                pos=ctl('state')['player']['block_pos'];bx,by,bz=pos[0]+2,pos[1],pos[2]+2
+                console(f'setblock {bx} {by} {bz} minecraft:bed 0')
+                console(f'setblock {bx} {by} {bz+1} minecraft:bed 8')
+                wait_value('Bed update',lambda:ctl('block',str(bx),str(by),str(bz)),lambda b:'bed' in b.get('block',''))
+                base=by+9/16
+                console(f'tp VfpSmoke {bx+.5} {base} {bz+.5}')
+                wait_value('Standing on bed',lambda:ctl('state'),lambda state:abs(state['player']['position'][1]-base)<.1)
+                ctl('key','space','down')
+                try:
+                    jumps=[]
+                    for _ in range(12):
+                        time.sleep(.08);jumps.append(ctl('state')['player']['position'][1])
+                    assert max(jumps)>base+.6,jumps
+                finally: ctl('key','space','up')
+                wait_value('Landed on bed',lambda:ctl('state'),lambda state:state['player']['on_ground'] and abs(state['player']['position'][1]-base)<.1)
+                (run/'bed-jump.json').write_text(json.dumps({'base':base,'samples':jumps},indent=2),encoding='utf-8')
+                report['checks']['jump_and_land_on_legacy_bed']=True
+                gamemode('creative')
+                for item in ['turtle_helmet','elytra','netherite_sword','shield','trident']:
+                    ctl('give',item,'1')
+                    wait_value('Unsupported item removed: '+item,lambda:ctl('inventory'),
+                               lambda inv:item not in json.dumps(inv))
+                    ctl('use-item','--hold','0.1')
+                    assert ctl('state')['screen']=='playing'
+                report['checks']['unsupported_new_items_cannot_be_equipped_or_sent']=True
+                ex,ey,ez=bx+4,by,bz
+                console(f'setblock {ex} {ey} {ez} minecraft:dirt')
+                wait_value('Explosion target',lambda:ctl('block',str(ex),str(ey),str(ez)),lambda b:b.get('block')=='minecraft:dirt')
+                console(f'summon PrimedTnt {ex+.5} {ey+.5} {ez+.5} {{Fuse:5}}')
+                wait_value('Explosion removed block',lambda:ctl('block',str(ex),str(ey),str(ez)),lambda b:b.get('block')=='minecraft:air')
+                light=wait_value('Explosion retains skylight',lambda:ctl('light',str(ex),str(ey+1),str(ez),str(ex),str(ey+1),str(ez)),
+                                 lambda value:value.get('sky') in ('e','f'))
+                (run/'explosion-light.json').write_text(json.dumps(light,indent=2),encoding='utf-8')
+                report['checks']['explosion_preserves_skylight']=True
+                gamemode('survival')
             position=ctl('state')['player']['block_pos']
             hx,hy,hz=position[0]+1,position[1],position[2]+1
             mob = 'Zombie' if protocol<315 else 'minecraft:zombie' if protocol<393 else 'minecraft:husk'

@@ -13,7 +13,7 @@ pub const ID: &str = "viahorizon";
 // Read only when migrating a previous installation.
 pub const LEGACY_ID: &str = "viafabricplus";
 pub const NAME: &str = "ViaHorizon";
-pub const VERSION: &str = "0.8.6-dev";
+pub const VERSION: &str = "0.8.7-dev";
 pub const CLIENT_PROTOCOL: i32 = 777;
 pub const CLIENT_VERSION: &str = "26.3";
 pub const MAX_PACKET: usize = 2_097_152;

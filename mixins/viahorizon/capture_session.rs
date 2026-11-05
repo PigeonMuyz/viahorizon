@@ -43,6 +43,13 @@ fn connection(
     Some((counters, state))
 }
 
+fn diagnostic(message: std::fmt::Arguments<'_>) {
+    diagnostic_to(&mut std::io::stderr().lock(), message);
+}
+fn diagnostic_to(writer: &mut impl std::io::Write, message: std::fmt::Arguments<'_>) {
+    let _ = writer.write_fmt(message); // A closed launcher log pipe must never crash the game.
+}
+
 const MAX_QUEUED_BYTES: usize = 4 * 1024 * 1024;
 struct Outbox {
     owner: Weak<Mutex<Option<ConnWriter>>>,
@@ -102,6 +109,7 @@ impl Outbox {
                         continue;
                     }
                     if writer.send(&body).is_err() {
+                        fault.store(true, Ordering::Release);
                         writer.shutdown();
                         break;
                     }
@@ -116,24 +124,38 @@ impl Outbox {
         })
     }
     fn push(&self, body: Vec<u8>) {
+        if self.failed.load(Ordering::Acquire) {
+            return;
+        }
         let size = body.len();
-        if self
-            .queued_bytes
-            .fetch_update(Ordering::Relaxed, Ordering::Relaxed, |bytes| {
-                bytes
-                    .checked_add(size)
-                    .filter(|&bytes| bytes <= MAX_QUEUED_BYTES)
-            })
-            .is_err()
-        {
+        let mut queued = self.queued_bytes.load(Ordering::Relaxed);
+        let full = loop {
+            let Some(next) = queued.checked_add(size).filter(|&n| n <= MAX_QUEUED_BYTES) else {
+                break true;
+            };
+            match self.queued_bytes.compare_exchange_weak(
+                queued,
+                next,
+                Ordering::Relaxed,
+                Ordering::Relaxed,
+            ) {
+                Ok(_) => break false,
+                Err(current) => queued = current,
+            }
+        };
+        if full {
             self.failed.store(true, Ordering::Release);
-            eprintln!("ViaHorizon: outgoing queue exceeded its byte bound");
+            diagnostic(format_args!(
+                "ViaHorizon: outgoing queue exceeded its byte bound\n"
+            ));
             return;
         }
         if self.sender.try_send(body).is_err() {
             self.queued_bytes.fetch_sub(size, Ordering::Relaxed);
             self.failed.store(true, Ordering::Release);
-            eprintln!("ViaHorizon: outgoing queue is full or disconnected");
+            diagnostic(format_args!(
+                "ViaHorizon: outgoing queue is full or disconnected\n"
+            ));
         }
     }
 }
@@ -225,7 +247,9 @@ pub fn enqueue_legacy(
             match Outbox::new(&session.writer, &counters, session.configuring.clone()) {
                 Ok(outbox) => *slot = Some(outbox),
                 Err(error) => {
-                    eprintln!("ViaHorizon: could not start outgoing worker: {error}");
+                    diagnostic(format_args!(
+                        "ViaHorizon: could not start outgoing worker: {error}\n"
+                    ));
                     return false;
                 }
             }
@@ -244,4 +268,42 @@ pub fn legacy_sword(item: &str) -> bool {
             | "minecraft:golden_sword"
             | "minecraft:diamond_sword"
     )
+}
+
+pub fn protocol(session: &super::Session) -> Option<i32> {
+    connection(session).and_then(|(_, state)| state.protocol())
+}
+
+std::thread_local! {
+    static ACTIVE_CAPABILITIES: std::cell::RefCell<Weak<horizon_protocol::vfp_session::PlayCapabilities>> = const { std::cell::RefCell::new(Weak::new()) };
+}
+pub fn activate(session: Option<&super::Session>) {
+    let snapshot = session
+        .and_then(connection)
+        .map(|(_, caps)| Arc::downgrade(&caps))
+        .unwrap_or_default();
+    ACTIVE_CAPABILITIES.with_borrow_mut(|current| *current = snapshot);
+}
+pub fn active_protocol() -> Option<i32> {
+    ACTIVE_CAPABILITIES.with_borrow(|state| state.upgrade().and_then(|s| s.protocol()))
+}
+
+#[cfg(test)]
+mod diagnostic_tests {
+    #[test]
+    fn a_closed_launcher_log_pipe_cannot_panic_the_outgoing_worker() {
+        struct Closed;
+        impl std::io::Write for Closed {
+            fn write(&mut self, _: &[u8]) -> std::io::Result<usize> {
+                Err(std::io::ErrorKind::BrokenPipe.into())
+            }
+            fn flush(&mut self) -> std::io::Result<()> {
+                Ok(())
+            }
+        }
+        super::diagnostic_to(
+            &mut Closed,
+            format_args!("ViaHorizon: unsupported item {}\n", 42),
+        );
+    }
 }

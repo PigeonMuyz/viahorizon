@@ -11,6 +11,20 @@ fn inject(
     {
         return ::core::ops::ControlFlow::Continue(());
     }
+    // Keep the result the local menu predicted, just as Horizon's send_clicks
+    // does. Older servers omit a redundant result-slot update after a match.
+    if matches!(
+        game.remote_menu().1.as_str(),
+        "inventory" | "minecraft:crafting"
+    ) {
+        if let Some(remote) = game.remote.as_mut() {
+            for (.., changed, _) in clicks {
+                if let Some((_, result)) = changed.iter().find(|(slot, _)| *slot == 0) {
+                    remote.craft_result = result.clone();
+                }
+            }
+        }
+    }
     let state = game.remote.as_ref().map_or(0, |remote| remote.state_id);
     for (slot, button, input, changed, carried) in clicks {
         let changed: Vec<_> = changed

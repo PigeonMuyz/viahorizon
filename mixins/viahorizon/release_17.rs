@@ -82,8 +82,8 @@ const ENCHANT_LAPIS: Stack = Stack {
     tag: Tag::End,
 };
 
-fn unsupported_item(id: i32, damage: i16) -> bool {
-    matches!(id, 165..=169 | 179..=192 | 409..=416 | 423..=425 | 427..=431)
+pub fn unsupported_item(id: i32, damage: i16) -> bool {
+    matches!(id, 165..=169 | 176..=197 | 409..=416 | 423..=425 | 427..=431)
         || matches!(
             (id, damage),
             (1, 1..=6) | (3, 1) | (19, 1) | (383, 67 | 68 | 101)
@@ -1397,7 +1397,14 @@ impl Legacy {
                 "USE_ITEM_ON" => {
                     let position = Position::unpack(r.i64()?, 47);
                     let face = r.u8()?;
-                    if position == (Position { x: -1, y: -1, z: -1 }) && face == 255 {
+                    if position
+                        == (Position {
+                            x: -1,
+                            y: -1,
+                            z: -1,
+                        })
+                        && face == 255
+                    {
                         // Air use has no block target. 1.8 packs Y=-1, whereas
                         // 1.7 sends the same sentinel as an unsigned byte.
                         w.i32(-1);

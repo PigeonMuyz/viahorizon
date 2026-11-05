@@ -445,6 +445,25 @@ impl Columns {
     pub fn forget(&mut self, x: i32, z: i32) {
         self.columns.remove(&(x, z));
     }
+    pub fn set_block(&mut self, position: codec::Position, state: i32) {
+        if !(0..256).contains(&position.y) {
+            return;
+        }
+        let Some(column) = self.columns.get_mut(&(position.x >> 4, position.z >> 4)) else {
+            return;
+        };
+        let section = column
+            .sections
+            .entry(position.y as usize / 16)
+            .or_insert_with(|| OldSection {
+                blocks: vec![0; 4096],
+                block_light: Vec::new(),
+                sky_light: None,
+            });
+        section.blocks[((position.y as usize & 15) << 8)
+            | ((position.z as usize & 15) << 4)
+            | (position.x as usize & 15)] = state;
+    }
     pub fn merge(&mut self, mut column: Column) -> Result<Column> {
         if column.full {
             if self.columns.len() >= 2048 && !self.columns.contains_key(&(column.x, column.z)) {
@@ -472,5 +491,45 @@ impl Columns {
             old.entities.push(entity);
         }
         Ok(old.clone())
+    }
+}
+
+#[cfg(test)]
+mod cache_regressions {
+    use super::*;
+    #[test]
+    fn partial_column_preserves_block_edits_and_explosion_air_in_other_sections() {
+        let column = |full, sections| Column {
+            x: -1,
+            z: 2,
+            full,
+            ignore_light: false,
+            sections,
+            biomes: None,
+            heightmap: Tag::End,
+            entities: Vec::new(),
+        };
+        let section = || OldSection {
+            blocks: vec![1; 4096],
+            block_light: Vec::new(),
+            sky_light: None,
+        };
+        let mut cache = Columns::default();
+        cache
+            .merge(column(
+                true,
+                BTreeMap::from([(0, section()), (1, section())]),
+            ))
+            .unwrap();
+        cache.set_block(codec::Position { x: -1, y: 4, z: 33 }, 0);
+        cache.set_block(codec::Position { x: -2, y: 5, z: 34 }, 7);
+        let merged = cache
+            .merge(column(false, BTreeMap::from([(1, section())])))
+            .unwrap();
+        assert_eq!(merged.sections[&0].blocks[(4 << 8) | (1 << 4) | 15], 0);
+        assert_eq!(merged.sections[&0].blocks[(5 << 8) | (2 << 4) | 14], 7);
+        assert_eq!(merged.sections[&0].blocks[0], 1);
+        cache.forget(-1, 2);
+        assert!(cache.merge(column(false, BTreeMap::new())).is_err());
     }
 }

@@ -12,6 +12,10 @@ pub struct PlayCapabilities {
     protocol: AtomicI32,
 }
 impl PlayCapabilities {
+    pub fn protocol(&self) -> Option<i32> {
+        let protocol = self.protocol.load(Ordering::Acquire);
+        (protocol != 0).then_some(protocol)
+    }
     pub fn full_items(&self) -> bool {
         matches!(self.protocol.load(Ordering::Acquire), 1..=769)
     }
@@ -331,6 +335,24 @@ impl Session {
                 } else {
                     wire_id
                 };
+                if crate::vfp_tables::NEW_SERVERBOUND.get(id as usize)
+                    == Some(&"SET_CREATIVE_MODE_SLOT")
+                {
+                    let mut item = crate::buf::Reader::new(&body[r.position()..]);
+                    item.i16().map_err(|e| e.to_string())?;
+                    if item.varint().map_err(|e| e.to_string())? > 0 {
+                        let native = item.varint().map_err(|e| e.to_string())?;
+                        if !(0..crate::vfp_tables::ITEMS.mapped_size).contains(&native) {
+                            return Err("Unknown native creative item".into());
+                        }
+                        if !crate::vfp_release_chain::native_item_supported(
+                            self.login.target.protocol,
+                            native,
+                        ) {
+                            return Ok(Vec::new());
+                        }
+                    }
+                }
                 if self.login.target.protocol < 764
                     && crate::vfp_tables::NEW_SERVERBOUND.get(id as usize) == Some(&"PING_REQUEST")
                 {

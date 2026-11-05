@@ -30,53 +30,34 @@ impl LightCache {
     }
     pub fn update(&mut self, data: &[u8]) -> Result<bool> {
         let mut r = Reader::new(data);
-        let x = r.varint()?;
-        let z = r.varint()?;
-        let start = r.position();
-        codec::boolean(&mut r)?;
-        let mut masks = Vec::new();
-        for _ in 0..4 {
-            let mask = r.long_array()?;
-            if mask.len() > 5 {
-                return Err(Error::new("Legacy light mask exceeds dimension bound"));
-            }
-            masks.push(mask);
+        let key = (r.varint()?, r.varint()?);
+        let incoming = decode_light(r.rest())?;
+        let old = self.columns.get(&key);
+        let mut merged = old
+            .map(|v| decode_light(v))
+            .transpose()?
+            .unwrap_or_default();
+        merged.0 = incoming.0;
+        for (previous, update) in merged.1.iter_mut().zip(incoming.1) {
+            previous.extend(update);
         }
-        for mask in &masks[..2] {
-            let expected: usize = mask.iter().map(|word| word.count_ones() as usize).sum();
-            let count = r.count(258)?;
-            if count != expected {
-                return Err(Error::new("Legacy light arrays disagree with mask"));
-            }
-            for _ in 0..count {
-                let layer = r.byte_array(2048)?;
-                if layer.len() != 2048 {
-                    return Err(Error::new("Invalid legacy light layer size"));
-                }
-            }
-        }
-        codec::end(&r)?;
-        if self.loaded.contains(&(x, z)) {
-            return Ok(true);
-        }
-        let bytes = data[start..].to_vec();
-        let previous = self.columns.get(&(x, z)).map_or(0, Vec::len);
+        let bytes = encode_light(&merged);
+        let previous = old.map_or(0, Vec::len);
         let new_size = self.bytes - previous + bytes.len();
-        if new_size > 64 * 1024 * 1024 || (self.columns.len() >= 4096 && previous == 0) {
+        if new_size > 64 * 1024 * 1024 || (self.columns.len() >= 4096 && old.is_none()) {
             return Err(Error::new("Legacy light cache exceeds connection bound"));
         }
         self.bytes = new_size;
-        self.columns.insert((x, z), bytes);
-        Ok(false)
+        self.columns.insert(key, bytes);
+        Ok(self.loaded.contains(&key))
     }
     fn append(&mut self, x: i32, z: i32, sections: usize, w: &mut Writer) -> Result<()> {
         if self.loaded.len() >= 65536 && !self.loaded.contains(&(x, z)) {
             return Err(Error::new("Too many loaded legacy columns"));
         }
         self.loaded.insert((x, z));
-        if let Some(data) = self.columns.remove(&(x, z)) {
-            self.bytes -= data.len();
-            w.bytes(&data);
+        if let Some(data) = self.columns.get(&(x, z)) {
+            w.bytes(data);
         } else {
             w.bool(false);
             w.varint(0);
@@ -93,6 +74,76 @@ impl LightCache {
         Ok(())
     }
 }
+type LightSnapshot = (bool, [BTreeMap<usize, Option<Vec<u8>>>; 2]);
+fn decode_light(data: &[u8]) -> Result<LightSnapshot> {
+    let mut r = Reader::new(data);
+    let trust = codec::boolean(&mut r)?;
+    let mut masks = Vec::new();
+    for _ in 0..4 {
+        let mask = r.long_array()?;
+        if mask.len() > 5 {
+            return Err(Error::new("Legacy light mask exceeds dimension bound"));
+        }
+        masks.push(mask);
+    }
+    let bits = |mask: &[i64]| -> Vec<usize> {
+        mask.iter()
+            .enumerate()
+            .flat_map(|(word, value)| {
+                (0..64)
+                    .filter(move |bit| (*value as u64) & (1u64 << bit) != 0)
+                    .map(move |bit| word * 64 + bit)
+            })
+            .collect()
+    };
+    let mut layers: [BTreeMap<usize, Option<Vec<u8>>>; 2] = Default::default();
+    for kind in 0..2 {
+        for index in bits(&masks[kind + 2]) {
+            layers[kind].insert(index, None);
+        }
+        let present = bits(&masks[kind]);
+        if r.count(258)? != present.len() {
+            return Err(Error::new("Legacy light arrays disagree with mask"));
+        }
+        for index in present {
+            if layers[kind].contains_key(&index) {
+                return Err(Error::new("Overlapping legacy light masks"));
+            }
+            let value = r.byte_array(2048)?;
+            if value.len() != 2048 {
+                return Err(Error::new("Invalid legacy light layer size"));
+            }
+            layers[kind].insert(index, Some(value));
+        }
+    }
+    codec::end(&r)?;
+    Ok((trust, layers))
+}
+fn encode_light(snapshot: &LightSnapshot) -> Vec<u8> {
+    let mut w = Writer::new();
+    w.bool(snapshot.0);
+    let mut masks = [vec![0i64; 5], vec![0; 5], vec![0; 5], vec![0; 5]];
+    for (kind, layers) in snapshot.1.iter().enumerate() {
+        for (index, value) in layers {
+            masks[if value.is_some() { kind } else { kind + 2 }][index / 64] |=
+                (1u64 << (index % 64)) as i64;
+        }
+    }
+    for mask in &mut masks {
+        while mask.last() == Some(&0) {
+            mask.pop();
+        }
+        w.long_array(mask);
+    }
+    for layers in &snapshot.1 {
+        w.varint(layers.values().filter(|v| v.is_some()).count() as i32);
+        for value in layers.values().flatten() {
+            w.byte_array(value);
+        }
+    }
+    w.data
+}
+
 fn spawner(kind: i32, tag: &mut Tag) {
     if kind == 8 {
         if let Tag::Compound(fields) = tag {
@@ -252,4 +303,80 @@ pub fn chunk_117(
     }
     light.append(x, z, sections, &mut w)?;
     Ok(w.data)
+}
+
+#[cfg(test)]
+mod light_regressions {
+    use super::*;
+    fn update(cache: &mut LightCache, snapshot: &LightSnapshot) -> bool {
+        let mut w = Writer::new();
+        w.varint(-2);
+        w.varint(3);
+        w.bytes(&encode_light(snapshot));
+        cache.update(&w.data).unwrap()
+    }
+    fn appended(cache: &mut LightCache) -> LightSnapshot {
+        let mut w = Writer::new();
+        cache.append(-2, 3, 16, &mut w).unwrap();
+        decode_light(&w.data).unwrap()
+    }
+    #[test]
+    fn partial_chunk_replacement_preserves_latest_sky_and_block_light() {
+        let mut cache = LightCache::default();
+        let initial = (
+            true,
+            [
+                BTreeMap::from([(1, Some(vec![255; 2048])), (2, Some(vec![238; 2048]))]),
+                BTreeMap::from([(1, Some(vec![17; 2048]))]),
+            ],
+        );
+        assert!(!update(&mut cache, &initial));
+        assert_eq!(appended(&mut cache), initial);
+        let partial = (
+            false,
+            [
+                BTreeMap::from([(2, None)]),
+                BTreeMap::from([(1, Some(vec![34; 2048]))]),
+            ],
+        );
+        assert!(update(&mut cache, &partial));
+        let expected = (
+            false,
+            [
+                BTreeMap::from([(1, Some(vec![255; 2048])), (2, None)]),
+                BTreeMap::from([(1, Some(vec![34; 2048]))]),
+            ],
+        );
+        assert_eq!(appended(&mut cache), expected);
+        assert_eq!(appended(&mut cache), expected);
+        cache.forget(-2, 3);
+        assert_eq!(cache.bytes, 0);
+        assert!(
+            appended(&mut cache)
+                .1
+                .iter()
+                .all(|layer| layer.values().all(Option::is_none))
+        );
+        cache.clear();
+        assert!(cache.loaded.is_empty());
+    }
+    #[test]
+    fn malformed_light_does_not_replace_retained_snapshot() {
+        let snapshot = (
+            true,
+            [
+                BTreeMap::from([(1, Some(vec![255; 2048]))]),
+                BTreeMap::new(),
+            ],
+        );
+        let mut cache = LightCache::default();
+        update(&mut cache, &snapshot);
+        let mut w = Writer::new();
+        w.varint(-2);
+        w.varint(3);
+        w.bytes(&encode_light(&snapshot));
+        w.data.pop();
+        assert!(cache.update(&w.data).is_err());
+        assert_eq!(appended(&mut cache), snapshot);
+    }
 }
