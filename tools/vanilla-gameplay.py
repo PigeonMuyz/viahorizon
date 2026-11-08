@@ -217,6 +217,7 @@ def main():
     parser.add_argument('--interaction-regression',action='store_true',
                         help='Check early-release air use and placement before the server receives the click')
     parser.add_argument('--legacy-regressions',action='store_true',help='Check 1.7 beds, crafting output, sword use, explosion light and unsupported items')
+    parser.add_argument('--boat-regression',action='store_true',help='Mount, remain seated in and dismount a legacy server boat')
     parser.add_argument('--streaming-profile',action='store_true',
                         help='Measure idle and repeated new-chunk frame times in an isolated world')
     parser.add_argument('--profile-origin',nargs=3,type=float,metavar=('X','Y','Z'),
@@ -498,6 +499,38 @@ def main():
             settled=ctl('state')['player']['position']
             assert sum((a-b)**2 for a,b in zip(start,settled))>.1,(start,settled)
             report['checks']['movement']=True
+            if args.boat_regression:
+                assert protocol in (4,5,47), '--boat-regression requires 1.7 or 1.8'
+                px,py,pz=settled
+                console(f'summon Boat {px+2} {py+.1} {pz}')
+                spawned=wait_value('Legacy boat spawn',lambda:ctl('status'),
+                    lambda s:any('boat' in o.get('kind','') for o in s.get('objects',[])))
+                boat=next(o for o in spawned['objects'] if 'boat' in o.get('kind',''))
+                time.sleep(.5)
+                current=next(o for o in ctl('status')['objects'] if o['id']==boat['id'])
+                bx,by,bz=current['position']
+                ctl('look-at',str(bx),str(by+.2),str(bz))
+                ctl('mouse','right','down')
+                try:
+                    mounted=wait_value('Legacy boat mounting',lambda:ctl('status'),
+                        lambda s:s.get('riding')==boat['id'])
+                finally: ctl('mouse','right','up')
+                samples=[mounted]
+                for _ in range(6):
+                    time.sleep(.2)
+                    seated=ctl('status');samples.append(seated)
+                    assert seated['riding']==boat['id'],seated
+                    assert seated['server']['decode_errors']==0,seated['server']
+                    vehicle=next(o for o in seated['objects'] if o['id']==boat['id'])
+                    player=seated['player']['position']
+                    assert sum((player[i]-vehicle['position'][i])**2 for i in (0,2))<2, (player,vehicle)
+                ctl('key','shift','down')
+                try:
+                    wait_value('Legacy boat dismounting',lambda:ctl('status'),lambda s:s.get('riding') is None)
+                finally: ctl('key','shift','up')
+                (run/'boat-ride.json').write_text(json.dumps(samples,indent=2),encoding='utf-8')
+                report['checks']['legacy_boat_mount_ride_and_dismount']=True
+                console(f'tp VfpSmoke {px} {py} {pz}')
             marker='vfp_chat_'+uuid.uuid4().hex[:8]
             ctl('chat',marker)
             wait_value('Chat echo',lambda:ctl('messages'),lambda messages:marker in json.dumps(messages))

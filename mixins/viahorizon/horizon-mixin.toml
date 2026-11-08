@@ -1,6 +1,6 @@
 [mod]
 id = "viahorizon"
-version = "0.8.7-dev"
+version = "0.8.8-dev"
 priority = 100
 
 [[module]]
@@ -152,7 +152,7 @@ visibility = "pub"
 
 # Internal connection hooks require an exact source pin, not hooks-only mode.
 [compatibility]
-horizon_revision = "6475f62f3c834b7489e1816bf47f47ea5eb2b879"
+horizon_revision = "fdc87aecdbd116bf1e08adcd062fcbaea8c2e2ca"
 
 [[module]]
 id = "chat_signing"

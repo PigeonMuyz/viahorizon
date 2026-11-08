@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-fn inject(game: &mut crate::game::Game<'_>) -> ::core::ops::ControlFlow<bool> {
+fn inject(game: &mut crate::game::Game<'_>) -> ::core::ops::ControlFlow<Result<bool>> {
     if !game.remote.as_ref().is_some_and(|remote| {
         matches!(
             horizon_client::net::vfp_capture_session::legacy_protocol(&remote.session),
@@ -22,5 +22,5 @@ fn inject(game: &mut crate::game::Game<'_>) -> ::core::ops::ControlFlow<bool> {
         player.velocity = horizon_core::geometry::Vec3::ZERO;
         player.fall_distance = 0.0;
     }
-    ::core::ops::ControlFlow::Break(true)
+    ::core::ops::ControlFlow::Break(Ok(true))
 }

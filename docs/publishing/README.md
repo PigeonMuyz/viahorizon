@@ -17,8 +17,8 @@ python tools/native.py package
 For an additional package check, install Horizon's checker and run it directly:
 
 ```powershell
-cargo install --git https://github.com/horizon-rust/horizon --rev 6475f62f3c834b7489e1816bf47f47ea5eb2b879 --locked cargo-horizon-mod
-cargo horizon-mod check dist/viahorizon-0.8.7-dev.hnmod --kind native-mod --json
+cargo install --git https://github.com/horizon-rust/horizon --rev fdc87aecdbd116bf1e08adcd062fcbaea8c2e2ca --locked cargo-horizon-mod
+cargo horizon-mod check dist/viahorizon-0.8.8-dev.hnmod --kind native-mod --json
 ```
 
 The `.hnmod` carries Rust/TOML sources, GPL license text and third-party notices.
