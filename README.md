@@ -3,16 +3,19 @@
 Choose the Minecraft server version when playing with Horizon 26.3.
 Supports Release servers from 1.7.2 through 26.3.
 
+This fork adds a [Minecraft 1.21.11 entity metadata fix](docs/releases/0.8.8-dev.1.md)
+to ViaHorizon 0.8.8-dev.
+
 ## Install
 
-Download `viahorizon-0.8.8-dev.hnmod` from
-[Releases](https://github.com/hhhhsffd/viahorizon/releases).
+Download `viahorizon-0.8.8-dev.1.hnmod` from the
+[fork release](https://github.com/PigeonMuyz/viahorizon/releases/tag/v0.8.8-dev.1).
 Requires Horizon Launcher with native-build support, prepared 26.3 resources,
 Python 3.11+, Rust 1.95+ and a C toolchain.
 
 ```powershell
-python -m zipfile -e .\viahorizon-0.8.8-dev.hnmod .\viahorizon-0.8.8-dev
-horizon-launcher native-build .\viahorizon-0.8.8-dev --trust-native-code
+python -m zipfile -e .\viahorizon-0.8.8-dev.1.hnmod .\viahorizon-0.8.8-dev.1
+horizon-launcher native-build .\viahorizon-0.8.8-dev.1 --trust-native-code
 ```
 
 ## Build

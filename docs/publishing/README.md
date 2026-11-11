@@ -18,7 +18,7 @@ For an additional package check, install Horizon's checker and run it directly:
 
 ```powershell
 cargo install --git https://github.com/horizon-rust/horizon --rev fdc87aecdbd116bf1e08adcd062fcbaea8c2e2ca --locked cargo-horizon-mod
-cargo horizon-mod check dist/viahorizon-0.8.8-dev.hnmod --kind native-mod --json
+cargo horizon-mod check dist/viahorizon-0.8.8-dev.1.hnmod --kind native-mod --json
 ```
 
 The `.hnmod` carries Rust/TOML sources, GPL license text and third-party notices.
