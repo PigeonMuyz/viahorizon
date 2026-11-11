@@ -300,6 +300,45 @@ fn metadata(id: i32, index: u8, value: i32, serializer: i32) -> wire::Packet {
     (native("SET_ENTITY_DATA"), w.data)
 }
 #[test]
+fn metadata_12111_keeps_the_last_value_for_a_repeated_index() {
+    use horizon_protocol::{
+        vfp_mapping::V12111, vfp_registry_access::Registries, vfp_tables_12111,
+        vfp_transition_12111::Transition,
+    };
+
+    let packet_id = wire::packet_id(vfp_tables_12111::CLIENTBOUND, "SET_ENTITY_DATA").unwrap();
+    let registries = Registries::default();
+    let mut transition = Transition::default();
+    // Entity 7, index 1 = 10, index 0 = 3, then index 1 = 20.
+    let payload = [7, 1, 1, 10, 0, 0, 3, 1, 1, 20, 255];
+    let (id, data) = transition
+        .clientbound(packet_id, &payload, &registries)
+        .unwrap();
+    let packets = items::clientbound_with::<V12111>(id, &data).unwrap();
+    assert_eq!(packets.len(), 1);
+    let play::Clientbound::SetEntityData(packet) = decode(&packets[0]) else {
+        panic!("Expected a translated entity metadata packet");
+    };
+    assert_eq!(packet.id, 7);
+    assert_eq!(
+        packet.values,
+        vec![(0, 0, Value::Byte(3)), (1, 1, Value::Int(20))]
+    );
+
+    let conflicting_serializer = [7, 1, 1, 10, 1, 0, 20, 255];
+    assert!(
+        transition
+            .clientbound(packet_id, &conflicting_serializer, &registries)
+            .is_err()
+    );
+    let truncated_value = [7, 1, 1, 10, 1, 1, 0x80];
+    assert!(
+        transition
+            .clientbound(packet_id, &truncated_value, &registries)
+            .is_err()
+    );
+}
+#[test]
 fn cube_metadata_and_entity_references_change_without_touching_default_zero_sentinels() {
     let mut ids = Entities::with_alias(-42).unwrap();
     let mut spawn_cube = vec![(native("ADD_ENTITY"), spawn(5, kind("slime"), 0))];

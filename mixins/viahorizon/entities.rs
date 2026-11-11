@@ -351,20 +351,25 @@ pub fn prepare_metadata_12111_using<M: Maps>(
     let mut r = Reader::new(payload);
     let mut w = Writer::new();
     w.varint(r.varint()?);
-    let mut seen = [false; 255];
+    let mut entries: Vec<(u8, i32, &[u8])> = Vec::new();
+    let mut last_entry: [Option<usize>; 255] = [None; 255];
     for _ in 0..256 {
         let old = r.u8()?;
         if old == 255 {
             if r.remaining() != 0 {
                 return Err(Error::new("Trailing old metadata"));
             }
+            // Vanilla applies repeats in packet order, so keep the final value.
+            for (position, (index, kind, value)) in entries.into_iter().enumerate() {
+                if last_entry[index as usize] == Some(position) {
+                    w.u8(index);
+                    w.varint(kind);
+                    w.bytes(value);
+                }
+            }
             w.u8(255);
             return Ok(w.data);
         }
-        if seen[old as usize] {
-            return Err(Error::new("Duplicate old metadata index"));
-        }
-        seen[old as usize] = true;
         let mut index = u16::from(old);
         if flags & 2 != 0 && index >= 19 {
             index += 1;
@@ -378,13 +383,18 @@ pub fn prepare_metadata_12111_using<M: Maps>(
         if index >= 255 {
             return Err(Error::new("Metadata index overflow"));
         }
-        w.u8(index as u8);
         let source = r.varint()?;
         let kind = serializer_12111(source)?;
-        w.varint(kind);
+        let previous = &mut last_entry[index as usize];
+        if let Some(position) = *previous
+            && entries[position].1 != kind
+        {
+            return Err(Error::new("Conflicting old metadata serializers"));
+        }
         let start = r.position();
         skip_source_metadata::<M>(kind, &mut r, registry)?;
-        w.bytes(r.since(start));
+        *previous = Some(entries.len());
+        entries.push((index as u8, kind, r.since(start)));
     }
     Err(Error::new("Old metadata has no terminator"))
 }
